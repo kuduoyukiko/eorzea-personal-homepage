@@ -74,7 +74,19 @@ SECRET_KEY=请替换为足够长的随机字符串
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=请替换为强密码
 INTRO_VIDEO_URL=/static/uploads/your-intro-video.mp4
+SITE_MODE=dual
 ```
+
+### 单角色与双角色模式
+
+网站默认使用双角色版。修改 `.env` 后重启应用即可切换：
+
+```dotenv
+SITE_MODE=single  # 单角色：仅展示和编辑角色 1
+SITE_MODE=dual    # 双角色：展示和编辑两个角色
+```
+
+单角色模式会使用角色 1 的资料并采用居中首页构图，同时隐藏双人记忆内容。角色 2 的已有数据不会被删除；切回 `dual` 后会恢复显示。
 
 可以使用下面的命令生成 `SECRET_KEY`：
 

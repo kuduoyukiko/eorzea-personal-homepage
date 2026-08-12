@@ -21,5 +21,8 @@ class Config:
     ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
     ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
     INTRO_VIDEO_URL = os.getenv("INTRO_VIDEO_URL", "")
+    SITE_MODE = os.getenv("SITE_MODE", "dual").strip().lower()
+    if SITE_MODE not in {"single", "dual"}:
+        SITE_MODE = "dual"
     # 数据文件路径
     DATA_PATH = os.path.join(os.path.dirname(__file__), "data")

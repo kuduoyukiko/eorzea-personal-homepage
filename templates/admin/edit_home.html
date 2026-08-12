@@ -28,7 +28,7 @@
         <div class="form-text">角色站立图，显示在卡片左侧。</div>
     </div>
 
-    <!-- 账号二 -->
+    {% if site_mode == 'dual' %}<!-- 账号二 -->
     <h3>账号二</h3>
     <div class="mb-3">
         <label class="form-label">游戏ID</label>
@@ -52,6 +52,7 @@
         <input type="url" name="account2_standing" class="form-control" value="{{ home.accounts[1].standing_image }}">
         <div class="form-text">角色站立图，显示在卡片左侧。</div>
     </div>
+    {% endif %}
 
     <!-- 背景图列表 -->
     <h3>背景图列表（每行一个URL）</h3>

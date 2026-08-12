@@ -3,6 +3,66 @@
    最终幻想14 黑暗奇幻风格
    ======================================== */
 
+/* 单角色模式：保留双角色视觉语言，将主角与档案收束为中央构图。 */
+.site-mode-single .reference-hero-single .reference-profile-left {
+    right: 21%;
+    left: 21%;
+    width: 58%;
+}
+
+.site-mode-single .reference-hero-single .reference-profile-left .reference-profile-art {
+    right: 0;
+    left: 0;
+    width: 100%;
+    margin-inline: auto;
+    object-position: 50% top;
+}
+
+.site-mode-single .reference-hero-single .reference-profile-left .reference-profile-card {
+    right: auto;
+    left: 50%;
+    width: min(280px, 72%);
+    transform: translateX(-50%);
+}
+
+.site-mode-single .reference-hero-single .reference-aether {
+    top: 57%;
+    left: 72%;
+}
+
+.site-mode-single .single-character-column .char-card {
+    min-height: 520px;
+}
+
+@media (max-width: 767.98px) {
+    .site-mode-single .reference-hero-single .reference-profile-left {
+        top: 185px;
+        right: 8%;
+        bottom: 145px;
+        left: 8%;
+        width: 84%;
+    }
+
+    .site-mode-single .reference-hero-single .reference-profile-left .reference-profile-art {
+        width: 112%;
+        max-width: none;
+        transform: translateX(-5%);
+    }
+
+    .site-mode-single .reference-hero-single .reference-profile-left .reference-profile-card {
+        width: min(260px, 82%);
+    }
+
+    .site-mode-single .reference-hero-single .reference-aether {
+        top: 55%;
+        left: 82%;
+    }
+
+    .site-mode-single .single-character-column .char-card {
+        min-height: 430px;
+    }
+}
+
 /* --- 颜色变量 --- */
 :root {
     --ff-dark: #08111f;

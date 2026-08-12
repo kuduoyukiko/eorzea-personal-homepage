@@ -3,12 +3,12 @@
 
 {% block content %}
 <h1 class="page-title animate-in">
-    <i class="fa-solid fa-users me-2"></i>角色信息
+    <i class="fa-solid fa-{% if site_mode == 'single' %}user{% else %}users{% endif %} me-2"></i>角色信息
 </h1>
 
 <div class="row g-4">
-    {% for char in characters %}
-    <div class="col-md-6 animate-on-scroll animate-in-delay-{{ loop.index }}">
+    {% for char in characters[:visible_character_count] %}
+    <div class="{% if site_mode == 'single' %}col-lg-8 col-md-10 mx-auto single-character-column{% else %}col-md-6{% endif %} animate-on-scroll animate-in-delay-{{ loop.index }}">
         <div class="char-card" style="background-image: url('{{ thumbnail_url(char.background_image) }}');">
             <span class="char-card-frame" aria-hidden="true"></span>
             <div class="overlay">
@@ -39,7 +39,7 @@
     {% endfor %}
 </div>
 
-<section class="cp-memory animate-on-scroll" aria-labelledby="cp-memory-title">
+{% if site_mode == 'dual' and characters|length > 1 %}<section class="cp-memory animate-on-scroll" aria-labelledby="cp-memory-title">
     <img
         class="cp-memory-backdrop"
         src="{{ url_for('static', filename='images/cp-memory-together.webp') }}"
@@ -83,6 +83,7 @@
         </figcaption>
     </figure>
 </section>
+{% endif %}
 
 {% if current_user.is_authenticated %}
 <div class="text-end mt-3 animate-on-scroll">

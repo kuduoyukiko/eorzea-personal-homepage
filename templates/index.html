@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Yukiko's Chronicle — 双角色冒险档案{% endblock %}
+{% block title %}Yukiko's Chronicle — {% if site_mode == 'single' %}单角色{% else %}双角色{% endif %}冒险档案{% endblock %}
 {% block body_class %}archive-home archive-reference{% endblock %}
 {% block content_class %}home-archive-shell{% endblock %}
 
@@ -217,24 +217,24 @@
 {% endif %}
 
 {% set account_a = home.accounts[0] %}
-{% set account_b = home.accounts[1] %}
+{% set account_b = home.accounts[1] if home.accounts|length > 1 else none %}
 
-<section class="reference-hero animate-in">
+<section class="reference-hero{% if site_mode == 'single' %} reference-hero-single{% endif %} animate-in">
     {% if home.bg_images %}<div class="reference-hero-bg" style="background-image:url('{{ home.bg_images[0] }}');"></div>{% endif %}
     <div class="reference-hero-scrim"></div>
     <div class="reference-title">
         <img class="reference-title-crystal" src="{{ url_for('static', filename='images/archive-crystal.png') }}" alt="">
-        <span>FINAL FANTASY XIV</span><h1>KUDOU YUKIKO</h1><em>Two souls, one journey.</em><p>两个角色，一段旅程；<br>两个世界，一个故事。</p>
+        <span>FINAL FANTASY XIV</span><h1>KUDOU YUKIKO</h1><em>{% if site_mode == 'single' %}One soul, one journey.{% else %}Two souls, one journey.{% endif %}</em><p>{% if site_mode == 'single' %}一个角色，一段旅程；<br>一束光，一个故事。{% else %}两个角色，一段旅程；<br>两个世界，一个故事。{% endif %}</p>
     </div>
     <article class="reference-profile reference-profile-left">
         {% if account_a.standing_image %}<img class="reference-profile-art" src="{{ account_a.standing_image }}" alt="{{ account_a.id }}角色立绘" loading="eager">{% endif %}
         <div class="reference-profile-card"><span class="reference-profile-script">{{ account_a.id }}</span><h2>{{ account_a.id }}</h2><dl><div><dt>WORLD</dt><dd>{{ account_a.server or 'Eorzea' }}</dd></div><div><dt>DATA CENTER</dt><dd>{{ account_a.region or 'Crystal' }}</dd></div></dl><a href="{{ url_for('characters') }}">查看档案 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
     </article>
       <div class="reference-aether" aria-hidden="true"><img src="{{ url_for('static', filename='images/aether-crystal-glass.png') }}" alt=""></div>
-    <article class="reference-profile reference-profile-right">
+    {% if site_mode == 'dual' and account_b %}<article class="reference-profile reference-profile-right">
         {% if account_b.standing_image %}<img class="reference-profile-art" src="{{ account_b.standing_image }}" alt="{{ account_b.id }}角色立绘" loading="eager">{% endif %}
         <div class="reference-profile-card"><span class="reference-profile-script">{{ account_b.id }}</span><h2>{{ account_b.id }}</h2><dl><div><dt>WORLD</dt><dd>{{ account_b.server or 'Eorzea' }}</dd></div><div><dt>DATA CENTER</dt><dd>{{ account_b.region or 'Crystal' }}</dd></div></dl><a href="{{ url_for('characters') }}">查看档案 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
-    </article>
+    </article>{% endif %}
     <aside class="reference-welcome"><img class="reference-welcome-postman" src="/static/images/moogle-postman.webp" alt="邮差莫古力" loading="lazy"><div><em>Kupo!</em><strong>欢迎回来，冒险者！</strong><p>今天也要把艾欧泽亚的美好回忆收藏起来。</p><a href="{{ url_for('contact') }}">打开留言簿 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></aside>
 </section>
 

@@ -120,6 +120,8 @@ def inject_asset_helpers():
         "versioned_static": versioned_static,
         "emote_ids": EMOTE_IDS,
         "common_emote_ids": COMMON_EMOTE_IDS,
+        "site_mode": app.config["SITE_MODE"],
+        "visible_character_count": 1 if app.config["SITE_MODE"] == "single" else 2,
     }
 
 # Flask-Login
@@ -432,8 +434,11 @@ def edit_home():
         print("收到编辑首页 POST 请求")
         print("表单数据:", request.form)
 
+        current_home = data_utils.read_json("home.json")
+        current_accounts = current_home.get("accounts", [])
         accounts = []
-        for i in range(1, 3):
+        account_count = 1 if app.config["SITE_MODE"] == "single" else 2
+        for i in range(1, account_count + 1):
             acc = {
                 "id": request.form.get(f"account{i}_id", ""),
                 "server": request.form.get(f"account{i}_server", ""),
@@ -442,6 +447,8 @@ def edit_home():
                 "standing_image": request.form.get(f"account{i}_standing", ""),
             }
             accounts.append(acc)
+        if account_count == 1:
+            accounts.extend(current_accounts[1:2])
         bg_images_text = request.form.get("bg_images", "")
         bg_images = [url.strip() for url in bg_images_text.splitlines() if url.strip()]
         home_data = {
@@ -464,9 +471,10 @@ def edit_home():
 @login_required
 def edit_characters():
     if request.method == "POST":
-        # 更新两个角色信息
+        current_characters = data_utils.read_json("characters.json")
         characters = []
-        for i in range(1, 3):
+        character_count = 1 if app.config["SITE_MODE"] == "single" else 2
+        for i in range(1, character_count + 1):
             char = {
                 "name": request.form.get(f"char{i}_name", ""),
                 "free_company": request.form.get(f"char{i}_fc", ""),
@@ -476,6 +484,8 @@ def edit_characters():
                 "background_image": request.form.get(f"char{i}_background", ""),  # 新增
             }
             characters.append(char)
+        if character_count == 1:
+            characters.extend(current_characters[1:2])
         data_utils.write_json("characters.json", characters)
         flash("角色信息已保存", "success")
         return redirect(url_for("admin.edit_characters"))
@@ -840,6 +850,8 @@ def inject_site_config():
         site_config=site_config,
         thumbnail_url=local_storage_utils.get_thumbnail_url,
         intro_video_url=app.config.get("INTRO_VIDEO_URL", ""),
+        site_mode=app.config["SITE_MODE"],
+        visible_character_count=1 if app.config["SITE_MODE"] == "single" else 2,
     )
 
 

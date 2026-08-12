@@ -24,7 +24,7 @@
         {% endif %}
     </style>
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %} site-mode-{{ site_mode }}">
     <a class="skip-link" href="#main-content">跳到主要内容</a>
 
     {% block before_navigation %}{% endblock %}
@@ -48,7 +48,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="sidebar-intro">
                     <span>WARRIOR OF LIGHT ARCHIVE</span>
-                    <p>两个角色，一段旅程</p>
+                    <p>{% if site_mode == 'single' %}一个角色，一段旅程{% else %}两个角色，一段旅程{% endif %}</p>
                 </div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" aria-label="主要导航">
                     <li class="nav-item">
