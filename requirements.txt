@@ -4,3 +4,4 @@ Pillow
 pillow-heif
 python-dotenv
 waitress>=2.1,<4
+cryptography>=42

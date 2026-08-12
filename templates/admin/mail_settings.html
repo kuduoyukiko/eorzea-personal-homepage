@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}邮件通知设置 — 管理后台{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in"><i class="fa-regular fa-envelope me-2"></i>邮件通知设置</h1>
+
+<div class="row g-4">
+    <div class="col-lg-8 mx-auto">
+        <form method="post" class="mail-settings-panel animate-on-scroll">
+            <div class="mail-settings-status" aria-live="polite">
+                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                <div>
+                    <strong>SMTP 授权码{% if mail_config.AUTH_CODE_CONFIGURED %}已配置{% else %}未配置{% endif %}</strong>
+                    <span>授权码会加密保存，页面不会回显。留空表示保持现有授权码。</span>
+                </div>
+            </div>
+
+            <div class="form-check form-switch mail-settings-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="mail-enabled" name="enabled"{% if mail_config.MAIL_ENABLED %} checked{% endif %}>
+                <label class="form-check-label" for="mail-enabled">启用新留言邮件通知</label>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="mail-sender">发件 QQ 邮箱</label>
+                <input class="form-control form-control-ff" id="mail-sender" name="sender" type="email" required autocomplete="email" value="{{ mail_config.MAIL_SENDER }}" placeholder="example@qq.com">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="mail-auth-code">QQ 邮箱 SMTP 授权码</label>
+                <input class="form-control form-control-ff" id="mail-auth-code" name="auth_code" type="password" autocomplete="new-password" placeholder="{% if mail_config.AUTH_CODE_CONFIGURED %}已配置，留空则不修改{% else %}首次配置必须填写{% endif %}">
+                <div class="form-text">这里填写 QQ 邮箱生成的 SMTP 授权码，不是 QQ 登录密码。</div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="mail-recipient">收件邮箱</label>
+                <input class="form-control form-control-ff" id="mail-recipient" name="recipient" type="email" required autocomplete="email" value="{{ mail_config.MAIL_RECIPIENT }}" placeholder="用于接收新留言通知">
+            </div>
+
+            <div class="mail-settings-actions">
+                <button class="btn btn-ff" type="submit" name="action" value="save"><i class="fa-regular fa-floppy-disk me-1"></i>保存设置</button>
+                <button class="btn btn-ff-outline" type="submit" name="action" value="test"><i class="fa-regular fa-paper-plane me-1"></i>保存并发送测试邮件</button>
+                <a class="btn btn-ff-outline" href="{{ url_for('admin.dashboard') }}"><i class="fa-solid fa-arrow-left me-1"></i>返回</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

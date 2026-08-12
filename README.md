@@ -104,6 +104,8 @@ SITE_URL=http://你的域名
 
 `MAIL_AUTH_CODE` 是 QQ 邮箱生成的 SMTP 授权码，不是 QQ 密码。请勿把 `.env` 提交到 Git。只有访客成功提交新留言时才会通知；邮件发送失败不会影响留言保存，错误会记录在服务器日志中。
 
+部署完成后，也可以登录 `/admin/dashboard`，打开“邮件通知设置”直接在网页中配置。网页保存的授权码会使用 `SECRET_KEY` 派生的密钥加密并写入 `data/mail_settings.json`，不会在设置页面回显。请保持 `SECRET_KEY` 稳定；更换它后需要重新填写授权码。
+
 可以使用下面的命令生成 `SECRET_KEY`：
 
 ```bash

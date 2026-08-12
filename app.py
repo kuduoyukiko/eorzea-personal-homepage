@@ -44,6 +44,13 @@ from flask_login import (
 )
 from werkzeug.utils import secure_filename
 from utils.email_notifications import queue_new_message_notification
+from utils.email_notifications import _send_notification
+from utils.mail_settings import (
+    effective_mail_config,
+    encrypt_auth_code,
+    load_stored_settings,
+    save_stored_settings,
+)
 from markupsafe import Markup, escape
 
 from config import Config
@@ -342,6 +349,61 @@ def signout_v3():
 @login_required
 def dashboard():
     return render_template("admin/dashboard.html")
+
+
+@admin_bp.route("/mail-settings", methods=["GET", "POST"])
+@login_required
+def mail_settings():
+    stored = load_stored_settings()
+    if request.method == "POST":
+        sender = request.form.get("sender", "").strip()
+        recipient = request.form.get("recipient", "").strip()
+        auth_code = request.form.get("auth_code", "").strip()
+        action = request.form.get("action", "save")
+        enabled = request.form.get("enabled") == "on"
+
+        if not sender.endswith("@qq.com") or "@" not in recipient:
+            flash("请填写有效的 QQ 发件邮箱和收件邮箱", "danger")
+            return redirect(url_for("admin.mail_settings"))
+
+        encrypted_code = stored.get("auth_code_encrypted", "")
+        if auth_code:
+            encrypted_code = encrypt_auth_code(app.config["SECRET_KEY"], auth_code)
+        if not encrypted_code and not app.config.get("MAIL_AUTH_CODE"):
+            flash("首次配置时必须填写 QQ 邮箱 SMTP 授权码", "danger")
+            return redirect(url_for("admin.mail_settings"))
+
+        save_stored_settings({
+            "enabled": enabled,
+            "smtp_host": "smtp.qq.com",
+            "smtp_port": 465,
+            "sender": sender,
+            "recipient": recipient,
+            "auth_code_encrypted": encrypted_code,
+        })
+
+        if action == "test":
+            config = effective_mail_config(app)
+            try:
+                _send_notification(
+                    config,
+                    {
+                        "name": "后台测试@Eorzea",
+                        "content": "这是一封来自网站后台的测试邮件。收到它表示邮件通知配置正确。",
+                        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    },
+                    f"{app.config.get('SITE_URL') or request.url_root.rstrip('/')}{url_for('admin.messages')}",
+                )
+                flash("测试邮件已发送，请检查收件箱和垃圾邮件文件夹", "success")
+            except Exception:
+                app.logger.exception("后台测试邮件发送失败")
+                flash("测试邮件发送失败，请检查发件邮箱、SMTP 授权码和网络连接", "danger")
+        else:
+            flash("邮件通知设置已保存", "success")
+        return redirect(url_for("admin.mail_settings"))
+
+    config = effective_mail_config(app)
+    return render_template("admin/mail_settings.html", mail_config=config)
 
 
 LIFE_CATEGORIES = {"daily": "日常", "travel": "旅行", "food": "美食"}

@@ -3,6 +3,8 @@ import smtplib
 from email.message import EmailMessage
 from threading import Thread
 
+from utils.mail_settings import effective_mail_config
+
 
 logger = logging.getLogger(__name__)
 
@@ -33,18 +35,15 @@ def _send_notification(config, message_data, admin_url):
 
 
 def queue_new_message_notification(app, message_data, admin_url):
+    config = effective_mail_config(app)
     required = ("MAIL_SENDER", "MAIL_AUTH_CODE", "MAIL_RECIPIENT")
-    if not all(app.config.get(key) for key in required):
+    if not config["MAIL_ENABLED"] or not all(config.get(key) for key in required):
         return False
 
-    mail_config = {
-        "MAIL_SMTP_HOST": app.config["MAIL_SMTP_HOST"],
-        "MAIL_SMTP_PORT": app.config["MAIL_SMTP_PORT"],
-        "MAIL_TIMEOUT": app.config["MAIL_TIMEOUT"],
-        "MAIL_SENDER": app.config["MAIL_SENDER"],
-        "MAIL_AUTH_CODE": app.config["MAIL_AUTH_CODE"],
-        "MAIL_RECIPIENT": app.config["MAIL_RECIPIENT"],
-    }
+    mail_config = {key: config[key] for key in (
+        "MAIL_SMTP_HOST", "MAIL_SMTP_PORT", "MAIL_TIMEOUT",
+        "MAIL_SENDER", "MAIL_AUTH_CODE", "MAIL_RECIPIENT"
+    )}
 
     def send_safely():
         try:
