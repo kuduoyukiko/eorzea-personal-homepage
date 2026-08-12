@@ -1,0 +1,452 @@
+/* Isolated NieR-inspired archive-terminal theme for the local /test copy. */
+:root {
+    --nt-paper: #d9d3c5;
+    --nt-paper-light: #ebe6da;
+    --nt-paper-deep: #c5beaf;
+    --nt-ink: #26251f;
+    --nt-muted: #676359;
+    --nt-line: rgba(45, 43, 36, .38);
+    --nt-line-soft: rgba(45, 43, 36, .17);
+    --nt-panel-dark: #24241f;
+    --nt-panel-dark-2: #181915;
+    --nt-gold: #aa8440;
+    --nt-gold-bright: #c59b4e;
+    --nt-shadow: 0 16px 40px rgba(37, 34, 27, .13);
+    --nt-display: Bahnschrift, "Arial Narrow", "DIN Condensed", "Microsoft YaHei UI", sans-serif;
+    --nt-body: Bahnschrift, "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+    --nt-code: Consolas, "Courier New", monospace;
+    --primary-gold: var(--nt-gold);
+    --primary-blue: #64665d;
+    --glass-bg: rgba(226, 221, 210, .92);
+    --glass-border: var(--nt-line);
+    --text-primary: var(--nt-ink);
+    --text-secondary: var(--nt-muted);
+}
+
+html { background: var(--nt-panel-dark-2); }
+
+body.terminal-login {
+    padding: 2rem;
+    background: var(--nt-panel-dark-2);
+}
+body.terminal-login .container::before {
+    content: "ARCHIVE TERMINAL  //  AUTHORIZATION REQUIRED";
+    display: block;
+    margin-bottom: .75rem;
+    color: rgba(232,225,208,.56);
+    font: .58rem Consolas, monospace;
+    letter-spacing: .16em;
+}
+body.terminal-login .content-card { padding: 2.4rem 2rem; }
+body.terminal-login .content-card::before { margin: -2.4rem -2rem 2rem; }
+
+body.nier-terminal {
+    color: var(--nt-ink);
+    font-family: var(--nt-body);
+    letter-spacing: .025em;
+    background: var(--nt-paper);
+}
+
+body.nier-terminal::before {
+    background:
+        radial-gradient(circle at 72% 15%, rgba(255,255,255,.42), transparent 34%),
+        repeating-linear-gradient(0deg, rgba(28,27,23,.018) 0 1px, transparent 1px 4px),
+        linear-gradient(115deg, rgba(255,255,255,.22), transparent 35%, rgba(55,51,43,.07));
+    opacity: 1;
+}
+
+body.nier-terminal::after {
+    opacity: .035 !important;
+    filter: none;
+    mix-blend-mode: soft-light;
+}
+
+.nier-terminal ::selection { color: var(--nt-paper-light); background: var(--nt-ink); }
+.nier-terminal a { color: #665129; }
+.nier-terminal a:hover { color: var(--nt-gold); }
+
+/* Archive rail */
+.nier-terminal .navbar-ff14,
+.nier-terminal .navbar-ff14.scrolled,
+.nier-terminal.archive-reference .navbar-ff14,
+.nier-terminal:not(.archive-reference) .navbar-ff14 {
+    border-right: 1px solid rgba(226,218,199,.16);
+    border-bottom: 0;
+    background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 5px),
+        linear-gradient(145deg, #282823, #181915 72%) !important;
+    box-shadow: 7px 0 24px rgba(23,22,18,.16);
+}
+
+.nier-terminal .navbar-ff14::after {
+    content: "ARCHIVE TERMINAL  //  PERSONAL RECORD SYSTEM\A SYS_07.3.2";
+    position: absolute;
+    right: 1.6rem;
+    bottom: 1.65rem;
+    left: 1.65rem;
+    padding-top: .9rem;
+    border-top: 1px solid rgba(227,220,201,.2);
+    color: rgba(227,220,201,.44);
+    font: 500 .55rem/1.75 Consolas, monospace;
+    letter-spacing: .18em;
+    white-space: pre;
+}
+
+.nier-terminal .aetheryte-icon img {
+    filter: grayscale(1) sepia(.4) contrast(1.2) brightness(1.45);
+}
+.nier-terminal .aetheryte-icon::before,
+.nier-terminal .aetheryte-icon::after { display: none; }
+.nier-terminal .navbar-ff14 .navbar-brand .brand-text,
+.nier-terminal .navbar-ff14 .navbar-brand .brand-text .ff-title,
+.nier-terminal .navbar-ff14 .navbar-brand .brand-text .ff-subtitle {
+    color: #ded8c9 !important;
+    font-family: var(--nt-display) !important;
+    font-style: normal;
+    letter-spacing: .19em;
+    transform: none;
+}
+.nier-terminal .navbar-ff14 .brand-text::after {
+    content: "PERSONAL RECORD SYSTEM";
+    display: block;
+    margin-top: .35rem;
+    color: rgba(222,216,201,.43);
+    font: .46rem Consolas, monospace;
+    letter-spacing: .15em;
+}
+.nier-terminal .navbar-ff14 .nav-link {
+    border: 1px solid transparent;
+    border-radius: 0;
+    color: rgba(225,220,207,.56);
+    font-family: var(--nt-display);
+}
+.nier-terminal .navbar-ff14 .nav-link:hover,
+.nier-terminal .navbar-ff14 .nav-link.active {
+    border-color: rgba(224,215,193,.25);
+    color: var(--nt-gold-bright);
+    background: rgba(255,255,255,.035) !important;
+}
+.nier-terminal .navbar-ff14 .navbar-collapse,
+.nier-terminal .navbar-ff14 .navbar-collapse.show,
+.nier-terminal .navbar-ff14 .navbar-collapse.collapsing {
+    color: rgba(225,220,207,.7);
+    background: transparent !important;
+}
+.nier-terminal .navbar-ff14 .navbar-collapse .nav-link {
+    color: rgba(225,220,207,.62) !important;
+    background: transparent !important;
+}
+.nier-terminal .navbar-ff14 .navbar-collapse .nav-link:hover,
+.nier-terminal .navbar-ff14 .navbar-collapse .nav-link.active {
+    color: var(--nt-gold-bright) !important;
+    background: rgba(255,255,255,.035) !important;
+}
+.nier-terminal .navbar-ff14 .nav-link.active::before {
+    content: "■";
+    margin-right: .72rem;
+    color: var(--nt-gold-bright);
+    font-size: .55rem;
+}
+.nier-terminal .navbar-ff14 .nav-link::after { background: var(--nt-gold); }
+.nier-terminal .navbar-ff14 .nav-link-icon { color: currentColor; filter: grayscale(1); }
+.nier-terminal .sidebar-intro span,
+.nier-terminal .sidebar-motto { color: rgba(225,220,207,.45); }
+
+/* Main archive sheet */
+.nier-terminal .main-wrapper { color: var(--nt-ink); }
+.nier-terminal .main-wrapper > .container,
+.nier-terminal.archive-reference .main-wrapper > .container,
+.nier-terminal.archive-home .main-wrapper > .container {
+    width: 100%;
+    max-width: none;
+    padding-right: clamp(1rem, 2.2vw, 2.75rem);
+    padding-left: clamp(1rem, 2.2vw, 2.75rem);
+}
+
+@media (min-width: 992px) {
+    .nier-terminal.archive-home .main-wrapper > .container {
+        padding-right: calc(var(--home-figure-rail) + clamp(10px, 1.2vw, 20px));
+        padding-left: calc(var(--home-figure-rail) + clamp(10px, 1.2vw, 20px));
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .nier-terminal.archive-home .main-wrapper > .container {
+        padding-right: calc(var(--home-figure-rail) + 12px);
+        padding-left: calc(var(--home-figure-rail) + 12px);
+    }
+}
+.nier-terminal .content-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--nt-line);
+    border-radius: 0;
+    color: var(--nt-ink);
+    background:
+        linear-gradient(90deg, transparent 28px, rgba(51,48,40,.1) 29px, transparent 30px),
+        rgba(232,227,216,.92);
+    box-shadow: var(--nt-shadow);
+    backdrop-filter: blur(5px);
+}
+.nier-terminal .content-card::before {
+    content: "RECORD VIEW   //   ACCESS: VERIFIED";
+    display: block;
+    min-height: 2.7rem;
+    margin: -1px -1px 1.7rem;
+    padding: .85rem 1.2rem .7rem;
+    border-bottom: 1px solid var(--nt-line);
+    color: var(--nt-muted);
+    font: 600 .62rem Consolas, monospace;
+    letter-spacing: .22em;
+}
+.nier-terminal .content-card::after {
+    content: "R-0001";
+    position: absolute;
+    top: .73rem;
+    right: 1.15rem;
+    color: var(--nt-gold);
+    font: 600 .72rem Consolas, monospace;
+    letter-spacing: .28em;
+}
+.nier-terminal .page-title {
+    padding-bottom: .85rem;
+    border-bottom: 1px solid var(--nt-line);
+    color: var(--nt-ink);
+    font-family: var(--nt-display);
+    font-stretch: condensed;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-shadow: none;
+}
+.nier-terminal .page-title::after {
+    content: " // ARCHIVE INDEX";
+    color: var(--nt-gold);
+    font: .58rem Consolas, monospace;
+    letter-spacing: .14em;
+}
+.nier-terminal .page-title-icon { color: var(--nt-gold); filter: grayscale(.6); }
+
+/* Shared panels and controls */
+.nier-terminal :is(.card,.char-card,.job-card,.social-card,.msg-card,.intro-card,.gallery-feature,.gallery-item,.life-photo,.mail-settings-panel,.reference-panel,.reference-beyond,.reference-profile-card) {
+    border: 1px solid var(--nt-line) !important;
+    border-radius: 0 !important;
+    color: var(--nt-ink);
+    background: rgba(235,230,219,.72) !important;
+    box-shadow: 5px 6px 0 rgba(50,47,39,.08) !important;
+    backdrop-filter: none !important;
+}
+.nier-terminal :is(.card,.char-card,.job-card,.social-card,.msg-card,.intro-card,.gallery-item,.life-photo,.reference-panel)::after {
+    border-radius: 0 !important;
+}
+.nier-terminal :is(.card-header,.card-header-ff,.msg-header,.gallery-group-title,.life-album-heading) {
+    border-color: var(--nt-line) !important;
+    color: var(--nt-paper-light) !important;
+    background: var(--nt-panel-dark) !important;
+}
+.nier-terminal :is(.btn,.btn-ff,.btn-ff-outline,.chronicle-button,.reference-panel-link,.reference-beyond-cta,.archive-link) {
+    border: 1px solid var(--nt-ink) !important;
+    border-radius: 0 !important;
+    color: var(--nt-ink) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: var(--nt-display);
+    letter-spacing: .08em;
+}
+.nier-terminal :is(.btn,.btn-ff,.btn-ff-outline,.chronicle-button,.reference-panel-link,.reference-beyond-cta,.archive-link):hover {
+    color: var(--nt-paper-light) !important;
+    background: var(--nt-ink) !important;
+    transform: translate(-2px,-2px);
+}
+.nier-terminal :is(.form-control,.form-control-ff,.form-select) {
+    border: 0;
+    border-bottom: 1px solid var(--nt-line);
+    border-radius: 0;
+    color: var(--nt-ink);
+    background: rgba(255,255,255,.2);
+    box-shadow: none;
+}
+.nier-terminal :is(.form-control,.form-control-ff,.form-select):focus {
+    border-color: var(--nt-gold);
+    color: var(--nt-ink);
+    background: rgba(255,255,255,.38);
+    box-shadow: 0 2px 0 var(--nt-gold);
+}
+.nier-terminal .text-muted,
+.nier-terminal .form-text,
+.nier-terminal .form-note { color: var(--nt-muted) !important; }
+.nier-terminal .badge { border-radius: 0; background: var(--nt-ink) !important; }
+.nier-terminal .alert { border-radius: 0; border-color: var(--nt-line); color: var(--nt-ink); background: var(--nt-paper-light); }
+
+/* Homepage: image-driven record, terminal frame and paper data cards */
+.nier-terminal.archive-reference .content-card { background: rgba(218,212,198,.88); }
+.nier-terminal.archive-reference .content-card::before,
+.nier-terminal.archive-reference .content-card::after { position: absolute; z-index: 30; }
+.nier-terminal .reference-hero {
+    min-height: 690px;
+    border: 1px solid var(--nt-line);
+    background: var(--nt-paper-deep);
+}
+.nier-terminal .reference-hero-bg {
+    filter: saturate(.9) contrast(.96) brightness(.9);
+}
+.nier-terminal .reference-hero-scrim {
+    background:
+        linear-gradient(90deg, rgba(222,216,202,.62), transparent 34% 66%, rgba(222,216,202,.62)),
+        linear-gradient(180deg, rgba(31,30,26,.14), transparent 52%, rgba(31,30,26,.3));
+    box-shadow: inset 0 0 0 10px rgba(225,220,208,.12), inset 0 0 0 11px rgba(42,40,34,.4);
+    backdrop-filter: none;
+}
+.nier-terminal .reference-title { color: var(--nt-paper-light); }
+.nier-terminal .reference-title > span,
+.nier-terminal .reference-title em { color: #d4b978; }
+.nier-terminal .reference-title h1 {
+    color: #eee7d6;
+    font-family: var(--nt-display);
+    font-style: normal;
+    letter-spacing: .14em;
+    transform: none;
+}
+.nier-terminal .reference-title p { color: rgba(239,232,216,.78); }
+.nier-terminal .reference-title-crystal { filter: grayscale(1) sepia(.5) brightness(1.65); }
+.nier-terminal .reference-profile-art { filter: drop-shadow(0 16px 22px rgba(0,0,0,.38)); }
+.nier-terminal .reference-profile-card { color: var(--nt-ink) !important; }
+.nier-terminal .reference-profile-card::before,
+.nier-terminal .reference-profile-card::after,
+.nier-terminal .reference-panel::before,
+.nier-terminal .reference-beyond::before { display: none; }
+.nier-terminal .reference-profile-script,
+.nier-terminal .reference-profile-card h2,
+.nier-terminal .reference-profile-card dt,
+.nier-terminal .reference-profile-card dd { color: var(--nt-ink); text-shadow: none; }
+.nier-terminal .reference-profile-card dl { border-color: var(--nt-line-soft); }
+.nier-terminal .reference-welcome {
+    border: 1px solid var(--nt-ink);
+    border-radius: 0;
+    color: var(--nt-paper-light);
+    background: rgba(31,31,27,.94);
+    box-shadow: 8px 9px 0 rgba(30,29,25,.25);
+}
+.nier-terminal .reference-welcome a { color: var(--nt-gold-bright); }
+.nier-terminal .reference-aether { opacity: .68; filter: none; }
+.nier-terminal .reference-panel header,
+.nier-terminal .reference-panel h2,
+.nier-terminal .reference-entry strong,
+.nier-terminal .reference-message-meta strong,
+.nier-terminal .reference-beyond-copy span { color: var(--nt-ink); }
+.nier-terminal .reference-panel header > i { border-color: var(--nt-line); color: var(--nt-gold); }
+.nier-terminal .reference-panel header span,
+.nier-terminal .reference-entry small,
+.nier-terminal .reference-beyond-copy small { color: #7e632f; }
+.nier-terminal .reference-entry p,
+.nier-terminal .reference-beyond-copy p { color: var(--nt-muted); }
+.nier-terminal .reference-mini-gallery img,
+.nier-terminal .reference-memory-grid img,
+.nier-terminal .reference-journal-image,
+.nier-terminal .reference-sanctuary-main { border-color: var(--nt-line); filter: none; }
+.nier-terminal .reference-mini-gallery img:hover,
+.nier-terminal .reference-memory-grid img:hover { filter: brightness(1.04) saturate(1.04); }
+.nier-terminal .reference-beyond { background: rgba(235,230,219,.72) !important; }
+.nier-terminal .reference-beyond-links a { color: #665129; }
+.nier-terminal .reference-signoff { color: var(--nt-ink); }
+
+/* NieR-like typographic hierarchy without redistributing proprietary game fonts. */
+.nier-terminal :is(h1,h2,h3,h4,h5,h6,
+    .char-name,.job-name,.social-card h3,.gallery-group-title,
+    .reference-panel h2,.reference-beyond-copy span,.reference-entry strong,
+    .reference-profile-script,.reference-profile-card h2,.reference-welcome em,
+    .reference-signoff,.card-header,.card-header-ff) {
+    font-family: var(--nt-display) !important;
+    font-style: normal;
+    font-stretch: condensed;
+    letter-spacing: .055em;
+}
+.nier-terminal :is(.section-kicker,.reference-title > span,.reference-title em,
+    .record-number,.job-abbr,.gallery-feature-label,.nav-copy small,
+    .reference-panel header span,.reference-entry small,.reference-beyond-copy small) {
+    font-family: var(--nt-code) !important;
+    letter-spacing: .16em;
+}
+.nier-terminal :is(p,li,dd,input,textarea,button,.nav-copy strong) {
+    font-family: var(--nt-body);
+}
+
+/* Collections */
+.nier-terminal :is(.char-card-frame,.job-card-content,.gallery-feature-caption,.gallery-item .overlay,.life-photo-meta) {
+    border-radius: 0 !important;
+    color: var(--nt-ink);
+}
+.nier-terminal :is(.char-card img,.job-card img,.gallery-item img,.gallery-feature img,.life-photo img,.social-card img) {
+    filter: none;
+    transition: filter .25s ease;
+}
+.nier-terminal :is(.char-card,.job-card,.gallery-item,.gallery-feature,.life-photo,.social-card):hover img { filter: brightness(1.04) saturate(1.04); }
+.nier-terminal .char-name,
+.nier-terminal .job-name,
+.nier-terminal .job-level,
+.nier-terminal .social-card h3,
+.nier-terminal .msg-name { color: var(--nt-ink) !important; text-shadow: none !important; }
+.nier-terminal .job-abbr,
+.nier-terminal .gallery-feature-label,
+.nier-terminal .gallery-tab.is-active { color: var(--nt-gold); }
+.nier-terminal .gallery-tabs { border-bottom: 1px solid var(--nt-line); }
+.nier-terminal .gallery-tab { border: 0; border-radius: 0; color: var(--nt-muted); background: transparent; }
+.nier-terminal .gallery-tab.is-active { border-bottom: 2px solid var(--nt-gold); background: transparent; }
+.nier-terminal .gallery-group-title { padding: .75rem 1rem; }
+
+/* Footer and utility overlays */
+.nier-terminal .footer-ff14 {
+    border-top: 1px solid rgba(224,216,198,.2);
+    color: rgba(231,225,211,.58);
+    background: var(--nt-panel-dark-2);
+}
+.nier-terminal .music-toggle,
+.nier-terminal .journey-replay {
+    border: 1px solid rgba(232,225,208,.35);
+    border-radius: 0;
+    color: var(--nt-gold-bright);
+    background: var(--nt-panel-dark);
+    box-shadow: 5px 5px 0 rgba(25,24,20,.2);
+}
+.nier-terminal .music-player {
+    border: 1px solid var(--nt-line);
+    border-radius: 0;
+    color: var(--nt-ink);
+    background: rgba(229,224,212,.98);
+}
+.nier-terminal .journey-intro-shade { background: rgba(22,22,19,.24); }
+.nier-terminal .journey-intro-video { filter: none; }
+.nier-terminal .journey-intro-mark,
+.nier-terminal .journey-enter { color: #eee8d9; font-family: Consolas, "Microsoft YaHei", monospace; }
+
+/* Admin keeps its existing layout; only the palette is translated. */
+.nier-terminal .admin-life-gallery,
+.nier-terminal .emote-editor { color: var(--nt-ink); }
+.nier-terminal table { --bs-table-bg: transparent; --bs-table-color: var(--nt-ink); --bs-table-border-color: var(--nt-line-soft); }
+.nier-terminal .table-dark { --bs-table-bg: var(--nt-panel-dark); --bs-table-color: var(--nt-paper-light); }
+.nier-terminal .form-check-input:checked { border-color: var(--nt-gold); background-color: var(--nt-gold); }
+
+@media (max-width: 991.98px) {
+    .nier-terminal .navbar-ff14,
+    .nier-terminal .navbar-ff14.scrolled { border-right: 0; border-bottom: 1px solid rgba(226,218,199,.18); background: var(--nt-panel-dark-2) !important; }
+    .nier-terminal .navbar-ff14 .navbar-collapse { background: var(--nt-panel-dark-2) !important; }
+    .nier-terminal .navbar-ff14::after { display: none; }
+    .nier-terminal .content-card { background-position: -10px 0; }
+    .nier-terminal .content-card::before { margin-bottom: 1rem; font-size: .5rem; }
+    .nier-terminal .reference-hero { min-height: 900px; }
+    .nier-terminal .reference-profile-card { background: rgba(235,230,219,.9) !important; }
+}
+
+@media (max-width: 575.98px) {
+    .nier-terminal .content-card::after { display: none; }
+    .nier-terminal .reference-hero { min-height: 980px; }
+    .nier-terminal .page-title::after { display: block; margin-top: .35rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nier-terminal *, .nier-terminal *::before, .nier-terminal *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

@@ -904,8 +904,68 @@ a,
     transform: translateX(-50%);
 }
 
-@media (min-width: 1500px) {
-    .home-side-character { display: block; }
+/* 首页人物使用与视口联动的装饰轨道：人物尺寸与内容安全边距共用变量。 */
+.archive-home {
+    --home-figure-rail: 0px;
+    --home-figure-width: 0px;
+    --home-figure-opacity: 0;
+}
+
+@media (min-width: 768px) {
+    .archive-home {
+        --home-figure-rail: clamp(42px, 5.2vw, 58px);
+        --home-figure-width: clamp(64px, 7.2vw, 82px);
+        --home-figure-opacity: .58;
+    }
+    .home-side-character {
+        display: block;
+        z-index: 2;
+        top: auto;
+        bottom: 0;
+        width: var(--home-figure-rail);
+        height: min(42vh, 420px);
+        opacity: var(--home-figure-opacity);
+    }
+    .home-side-character-left { left: var(--ff-sidebar-width); }
+    .home-side-character-right { right: 0; }
+    .home-side-character img { width: var(--home-figure-width); opacity: 1; }
+    .archive-home .main-wrapper > .container {
+        padding-right: calc(var(--home-figure-rail) + clamp(10px, 1.2vw, 20px));
+        padding-left: calc(var(--home-figure-rail) + clamp(10px, 1.2vw, 20px));
+    }
+}
+
+@media (min-width: 992px) {
+    .archive-home {
+        --home-figure-rail: clamp(52px, 5vw, 78px);
+        --home-figure-width: clamp(76px, 6.7vw, 108px);
+        --home-figure-opacity: .66;
+    }
+}
+
+@media (min-width: 1440px) {
+    .archive-home {
+        --home-figure-rail: clamp(74px, 5.4vw, 104px);
+        --home-figure-width: clamp(104px, 7vw, 138px);
+        --home-figure-opacity: .76;
+    }
+    .home-side-character { height: min(48vh, 520px); }
+}
+
+@media (max-width: 767.98px) {
+    .home-side-character {
+        display: block;
+        position: absolute;
+        z-index: 1;
+        top: 650px;
+        bottom: auto;
+        width: 42px;
+        height: 130px;
+        opacity: .38;
+    }
+    .home-side-character-left { left: 0; }
+    .home-side-character-right { right: 0; }
+    .home-side-character img { width: 64px; }
 }
 @media (max-width:991.98px) { .reference-hero { min-height:650px; } .reference-profile { width:48%; } .reference-profile-card { width:190px; } .reference-profile-left .reference-profile-card { left:1rem; } .reference-profile-right .reference-profile-card { right:1rem; } .reference-archive-grid { grid-template-columns:repeat(2,1fr); } .reference-memories { grid-column:span 2; } }
 @media (max-width:767.98px) { .reference-hero { min-height:820px; } .reference-title { width:100%; padding-top:2rem; } .reference-title h1 { font-size:2.2rem; } .reference-title p { margin-top:.9rem; font-size:.68rem; } .reference-profile { top:190px; bottom:145px; width:50%; } .reference-profile-art { width:125%; height:100%; } .reference-profile-left .reference-profile-art { left:-30%; } .reference-profile-right .reference-profile-art { right:-30%; } .reference-profile-card { bottom:0; width:calc(100% - .8rem); padding:.75rem .7rem; } .reference-profile-left .reference-profile-card { left:.4rem; } .reference-profile-right .reference-profile-card { right:.4rem; } .reference-profile-script { font-size:.72rem; } .reference-profile-card h2 { margin:.14rem 0 .45rem; font-size:.93rem; } .reference-profile-card dl { padding:.45rem 0; } .reference-profile-card a { margin-top:.55rem; padding:.32rem .5rem; font-size:.56rem; } .reference-aether { top:56%; width:84px; height:112px; } .reference-aether img { width:205px; } .reference-welcome { bottom:1.7rem; width:88%; min-height:112px; padding:.7rem .75rem .7rem 72px; } .reference-welcome > img { bottom:-.2rem; width:115px; } .reference-welcome em { font-size:1.1rem; } .reference-welcome strong { font-size:.68rem; } .reference-welcome p { font-size:.52rem; } .reference-welcome a { font-size:.54rem; } .reference-archive-grid { grid-template-columns:1fr; margin-top:2.2rem; } .reference-panel,.reference-memories { grid-column:auto; min-height:0; } .reference-beyond { min-height:280px; padding:1.2rem; align-items:flex-start; background-position:94% 87%; background-size:190px auto; } .reference-beyond-links { margin:1.2rem 0 0; gap:.8rem; } .reference-beyond > img { right:4%; width:170px; } .reference-beyond-cta { right:1.2rem; bottom:1.1rem; } }
