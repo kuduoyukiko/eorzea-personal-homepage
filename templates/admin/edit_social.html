@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>编辑社交链接</h1>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">石之家主页</label>
+        <input type="url" name="shizhijia" class="form-control" value="{{ social.shizhijia }}">
+        <label class="form-label mt-2">石之家图片URL</label>
+        <input type="url" name="shizhijia_image" class="form-control" value="{{ social.shizhijia_image }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Steam主页</label>
+        <input type="url" name="steam" class="form-control" value="{{ social.steam }}">
+        <label class="form-label mt-2">Steam图片URL</label>
+        <input type="url" name="steam_image" class="form-control" value="{{ social.steam_image }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Oopz服务器</label>
+        <input type="url" name="oopz" class="form-control" value="{{ social.oopz }}">
+        <label class="form-label mt-2">Oopz图片URL</label>
+        <input type="url" name="oopz_image" class="form-control" value="{{ social.oopz_image }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">QQ主页</label>
+        <input type="url" name="qq" class="form-control" value="{{ social.qq }}">
+        <label class="form-label mt-2">QQ图片URL</label>
+        <input type="url" name="qq_image" class="form-control" value="{{ social.qq_image }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">B站主页</label>
+        <input type="url" name="bilibili" class="form-control" value="{{ social.bilibili }}">
+        <label class="form-label mt-2">B站图片URL</label>
+        <input type="url" name="bilibili_image" class="form-control" value="{{ social.bilibili_image }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">B站直播间</label>
+        <input type="url" name="bilibili_live" class="form-control" value="{{ social.bilibili_live }}">
+        <label class="form-label mt-2">B站直播间图片URL</label>
+        <input type="url" name="bilibili_live_image" class="form-control" value="{{ social.bilibili_live_image }}">
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">返回</a>
+</form>
+{% endblock %}

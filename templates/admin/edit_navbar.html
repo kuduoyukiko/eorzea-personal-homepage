@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>编辑导航栏</h1>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">网页背景图片URL</label>
+        <input type="url" name="body_bg" class="form-control" value="{{ site_config.body_bg }}">
+        <div class="form-text">设置整个网页的背景图片，建议使用较浅的图片，以免文字看不清。</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">导航栏背景图片URL</label>
+        <input type="url" name="navbar_bg" class="form-control" value="{{ site_config.navbar_bg }}">
+        <div class="form-text">导航栏的背景图片，会覆盖默认的半透明黑色。</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Logo图片URL</label>
+        <input type="url" name="navbar_logo" class="form-control" value="{{ site_config.navbar_logo }}">
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">返回</a>
+</form>
+{% endblock %}

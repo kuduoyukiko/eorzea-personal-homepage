@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% from "_emote_picker.html" import emote_catalog, emote_editor with context %}
+{% block content %}
+{{ emote_catalog() }}
+<h1>留言管理</h1>
+
+{% for msg in messages|reverse %}
+<div class="card mb-3">
+    <div class="card-header">
+        {{ msg.name }} 发表于 {{ msg.time }}
+        <a href="{{ url_for('admin.delete_message', message_id=msg.id) }}" 
+       class="btn btn-sm btn-danger" 
+       onclick="return confirm('确定要删除这条留言吗？');">删除</a>
+    </div>
+    <div class="card-body">
+        <p class="card-text message-rich-text">{{ msg.content|render_message }}</p>
+        {% if msg.replies %}
+            {% for reply in msg.replies %}
+            <div class="border-start ps-3 mt-2">
+                <strong>管理员回复：</strong> <span class="message-rich-text">{{ reply.content|render_message }}</span> <small class="text-muted">{{ reply.time }}</small>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" action="{{ url_for('admin.reply_message', message_id=msg.id) }}" class="mt-3">
+            {{ emote_editor('reply', 'reply-' ~ msg.id, '写下回复…', true) }}
+            <button class="btn btn-primary mt-2" type="submit">回复</button>
+        </form>
+    </div>
+</div>
+{% else %}
+<p>暂无留言</p>
+{% endfor %}
+
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">返回</a>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ versioned_static('js/emote-picker.js') }}" defer></script>
+{% endblock %}

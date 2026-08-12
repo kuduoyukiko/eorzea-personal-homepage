@@ -1,0 +1,94 @@
+﻿{% extends "base.html" %}
+{% block title %}角色 — 最终幻想14 个人主页{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in">
+    <i class="fa-solid fa-users me-2"></i>角色信息
+</h1>
+
+<div class="row g-4">
+    {% for char in characters %}
+    <div class="col-md-6 animate-on-scroll animate-in-delay-{{ loop.index }}">
+        <div class="char-card" style="background-image: url('{{ thumbnail_url(char.background_image) }}');">
+            <span class="char-card-frame" aria-hidden="true"></span>
+            <div class="overlay">
+                <h3 class="char-name">
+                    <i class="fa-solid fa-{{ 'venus' if loop.first else 'dragon' }} me-2"></i>
+                    {{ char.name }}
+                </h3>
+                <div class="char-info">
+                    <p class="mb-1">
+                        <i class="fa-solid fa-flag me-2" style="color:var(--ff-gold-dim);"></i>
+                        部队：{{ char.free_company }}
+                    </p>
+                    <p class="mb-1">
+                        <i class="fa-solid fa-city me-2" style="color:var(--ff-gold-dim);"></i>
+                        主城：{{ char.city }}
+                    </p>
+                    <p class="mb-0">
+                        <i class="fa-regular fa-calendar me-2" style="color:var(--ff-gold-dim);"></i>
+                        开始冒险：{{ char.start_date }}
+                    </p>
+                </div>
+                {% if char.badge_image %}
+                <img src="{{ thumbnail_url(char.badge_image) }}" class="char-badge" alt="铭牌截图" loading="lazy" decoding="async">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<section class="cp-memory animate-on-scroll" aria-labelledby="cp-memory-title">
+    <img
+        class="cp-memory-backdrop"
+        src="{{ url_for('static', filename='images/cp-memory-together.webp') }}"
+        alt="{{ characters[0].name }}与{{ characters[1].name }}的双人合照"
+        loading="lazy"
+    >
+    <div class="cp-memory-tint" aria-hidden="true"></div>
+
+    <div class="cp-memory-copy">
+        <span class="cp-memory-eyebrow">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+            TWO SOULS · ONE JOURNEY
+        </span>
+        <h2 id="cp-memory-title">Eorzea 的双人记忆</h2>
+        <p>
+            从并肩踏上旅途的那一天起，艾欧泽亚的风景，
+            都成为了属于我们的共同回忆。
+        </p>
+        <blockquote>
+            “无论走到哪一个世界，都要一起把故事写下去。”
+        </blockquote>
+        <span class="cp-memory-names">{{ characters[0].name }} × {{ characters[1].name }}</span>
+    </div>
+
+    <figure class="cp-polaroid">
+        <div class="cp-polaroid-portraits">
+            <img
+                src="{{ url_for('static', filename='images/cp-memory-mie.webp') }}"
+                alt="{{ characters[1].name }}单人照"
+                loading="lazy"
+            >
+            <img
+                src="{{ url_for('static', filename='images/cp-memory-yukine.webp') }}"
+                alt="{{ characters[0].name }}单人照"
+                loading="lazy"
+            >
+        </div>
+        <figcaption>
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            我们的旅途 · Eorzea
+        </figcaption>
+    </figure>
+</section>
+
+{% if current_user.is_authenticated %}
+<div class="text-end mt-3 animate-on-scroll">
+    <a href="{{ url_for('admin.edit_characters') }}" class="btn btn-ff btn-sm">
+        <i class="fa-solid fa-pen me-1"></i>编辑角色
+    </a>
+</div>
+{% endif %}
+{% endblock %}

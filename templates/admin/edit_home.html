@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>编辑首页</h1>
+<form method="post">
+    <!-- 账号一 -->
+    <h3>账号一</h3>
+    <div class="mb-3">
+        <label class="form-label">游戏ID</label>
+        <input type="text" name="account1_id" class="form-control" value="{{ home.accounts[0].id }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">服务器</label>
+        <input type="text" name="account1_server" class="form-control" value="{{ home.accounts[0].server }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">大区</label>
+        <input type="text" name="account1_region" class="form-control" value="{{ home.accounts[0].region }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">头像图片URL</label>
+        <input type="url" name="account1_avatar" class="form-control" value="{{ home.accounts[0].avatar }}">
+        <div class="form-text">建议使用正方形图片，将显示为圆形头像框。</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">站立图URL</label>
+        <input type="url" name="account1_standing" class="form-control" value="{{ home.accounts[0].standing_image }}">
+        <div class="form-text">角色站立图，显示在卡片左侧。</div>
+    </div>
+
+    <!-- 账号二 -->
+    <h3>账号二</h3>
+    <div class="mb-3">
+        <label class="form-label">游戏ID</label>
+        <input type="text" name="account2_id" class="form-control" value="{{ home.accounts[1].id }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">服务器</label>
+        <input type="text" name="account2_server" class="form-control" value="{{ home.accounts[1].server }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">大区</label>
+        <input type="text" name="account2_region" class="form-control" value="{{ home.accounts[1].region }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">头像图片URL</label>
+        <input type="url" name="account2_avatar" class="form-control" value="{{ home.accounts[1].avatar }}">
+        <div class="form-text">建议使用正方形图片，将显示为圆形头像框。</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">站立图URL</label>
+        <input type="url" name="account2_standing" class="form-control" value="{{ home.accounts[1].standing_image }}">
+        <div class="form-text">角色站立图，显示在卡片左侧。</div>
+    </div>
+
+    <!-- 背景图列表 -->
+    <h3>背景图列表（每行一个URL）</h3>
+    <div class="mb-3">
+        <textarea name="bg_images" class="form-control" rows="5">{% for img in home.bg_images %}{{ img }}{% if not loop.last %}
+{% endif %}{% endfor %}</textarea>
+    </div>
+
+    <!-- 提交按钮和返回链接 -->
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">返回</a>
+</form>
+{% endblock %}

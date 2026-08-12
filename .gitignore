@@ -1,0 +1,46 @@
+# Secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+
+# Server-managed content: never overwrite these during deployment
+data/*.json
+static/uploads/*
+!data/.gitkeep
+!static/uploads/.gitkeep
+
+# Deployment credentials and runtime state
+.deploy/
+*.pid
+*.log
+*.log.err
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local previews, QA output and temporary files
+tmp/
+preview-*.png
+debug_*.txt
+ping_debug.txt
+.pytest_cache/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.agents/
+.codex/
+scripts/migrate_to_cos.py
+tools/migrate_cos_to_local.py
+tools/gh/
+utils/cos_utils.py
+utils/*.bak
+.DS_Store
+Thumbs.db
+
+# Local exports and backups
+backups/
+*.zip

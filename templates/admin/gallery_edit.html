@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>编辑文件信息</h1>
+<p>文件: {{ file.key.split('/')[-1] }}</p>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">所属账号</label>
+        <select name="account" class="form-control">
+            <option value="1" {% if file.account=='1' %}selected{% endif %}>账号1 (怎么睡不醒)</option>
+            <option value="2" {% if file.account=='2' %}selected{% endif %}>账号2 (月见mie)</option>
+            <option value="both" {% if file.account=='both' %}selected{% endif %}>合照</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">描述</label>
+        <input type="text" name="description" class="form-control" value="{{ file.description }}">
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" name="sticky" class="form-check-input" id="sticky" {% if file.sticky %}checked{% endif
+            %}>
+        <label class="form-check-label" for="sticky">置顶</label>
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('admin.gallery_upload') }}" class="btn btn-secondary">返回</a>
+</form>
+{% endblock %}

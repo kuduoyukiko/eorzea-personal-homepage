@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>编辑个人介绍</h1>
+<form method="post">
+    <div class="mb-3">
+        <label for="content" class="form-label">介绍内容</label>
+        <textarea class="form-control" id="content" name="content" rows="6">{{ intro.content }}</textarea>
+        <div class="form-text">支持多行文本，直接换行即可。</div>
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">返回</a>
+</form>
+{% endblock %}

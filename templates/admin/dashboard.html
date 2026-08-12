@@ -1,0 +1,167 @@
+﻿{% extends "base.html" %}
+{% block title %}管理后台 — 最终幻想14 个人主页{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in">
+    <i class="fa-solid fa-screwdriver-wrench me-2"></i>管理后台
+</h1>
+
+<div class="row g-3 animate-on-scroll">
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_navbar') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-paintbrush" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">导航栏设置</h6>
+                        <small style="color:var(--ff-text-muted);">背景图、Logo、页面背景</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_home') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-house" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">编辑首页</h6>
+                        <small style="color:var(--ff-text-muted);">账号信息、头像、轮播图</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_characters') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-users" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">编辑角色铭牌</h6>
+                        <small style="color:var(--ff-text-muted);">角色信息、徽章、背景</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_jobs') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-crosshairs" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">编辑职业等级</h6>
+                        <small style="color:var(--ff-text-muted);">等级、图标</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.gallery_upload') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-images" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">游戏记录上传</h6>
+                        <small style="color:var(--ff-text-muted);">管理相册、上传/删除</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.real_life_photos') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-camera-retro" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">现实相册</h6>
+                        <small style="color:var(--ff-text-muted);">手机上传、说明与公开展示</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_social') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-link" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">编辑社交链接</h6>
+                        <small style="color:var(--ff-text-muted);">石之家、Steam、B站等</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.messages') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-regular fa-comment" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">管理留言</h6>
+                        <small style="color:var(--ff-text-muted);">回复、删除留言</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_intro') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-regular fa-address-card" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">编辑个人介绍</h6>
+                        <small style="color:var(--ff-text-muted);">修改关于我的内容</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="{{ url_for('admin.edit_music') }}" class="text-decoration-none">
+            <div class="job-card text-start p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:44px;height:44px;border-radius:10px;background:var(--ff-gold-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fa-solid fa-music" style="color:var(--ff-gold);"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-gold mb-1">音乐播放器设置</h6>
+                        <small style="color:var(--ff-text-muted);">网易云、QQ音乐、默认音源</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="text-center mt-4 animate-on-scroll">
+    <a href="{{ url_for('admin.signout_v3') }}" class="btn btn-ff-outline btn-sm">
+        <i class="fa-solid fa-right-from-bracket me-1"></i>注销
+    </a>
+</div>
+{% endblock %}

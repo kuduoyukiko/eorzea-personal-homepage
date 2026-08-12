@@ -1,0 +1,120 @@
+﻿{% extends "base.html" %}
+{% from "_emote_picker.html" import emote_catalog, emote_editor with context %}
+{% block title %}留言 — 最终幻想14 个人主页{% endblock %}
+
+{% block content %}
+{{ emote_catalog() }}
+<h1 class="page-title animate-in">
+    <i class="fa-solid fa-comment me-2"></i>留言簿
+</h1>
+
+<div class="row g-4">
+    <!-- 留言表单 -->
+    <div class="col-lg-5 animate-on-scroll">
+        <div class="contact-form" style="background:var(--ff-dark3);border-radius:12px;padding:1.5rem;border:1px solid var(--ff-border);">
+            <h5 class="text-gold mb-3">
+                <i class="fa-regular fa-pen-to-square me-2"></i>给我留言
+            </h5>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="game_id"><i class="fa-solid fa-user me-1"></i>游戏ID</label>
+                    <input type="text" class="form-control form-control-ff" id="game_id" name="game_id" required
+                        placeholder="你的角色名">
+                </div>
+                <div class="mb-3">
+                    <label for="server"><i class="fa-solid fa-server me-1"></i>服务器</label>
+                    <select class="form-control form-control-ff" id="server" name="server" required>
+                        <option value="">— 请选择服务器 —</option>
+                        <option value="拉诺西亚">拉诺西亚</option>
+                        <option value="幻影群岛">幻影群岛</option>
+                        <option value="紫水栈桥">紫水栈桥</option>
+                        <option value="水晶塔">水晶塔</option>
+                        <option value="幻影群岛">幻影群岛</option>
+                        <option value="神拳痕">神拳痕</option>
+                        <option value="延夏">延夏</option>
+                        <option value="银泪湖">银泪湖</option>
+                        <option value="神意之地">神意之地</option>
+                        <option value="白银乡">白银乡</option>
+                        <option value="静语庄园">静语庄园</option>
+                        <option value="太阳海岸">太阳海岸</option>
+                        <option value="萌芽池">萌芽池</option>
+                        <option value="白金幻象">白金幻象</option>
+                        <option value="摩杜纳">摩杜纳</option>
+                        <option value="伊修加德">伊修加德</option>
+                        <option value="红玉海">红玉海</option>
+                        <option value="旅人栈桥">旅人栈桥</option>
+                        <option value="海猫茶屋">海猫茶屋</option>
+                        <option value="红茶川">红茶川</option>
+                        <option value="宇宙和音">宇宙和音</option>
+                        <option value="拂晓之间">拂晓之间</option>
+                        <option value="柔风海湾">柔风海湾</option>
+                        <option value="沃仙曦染">沃仙曦染</option>
+                        <option value="龙巢神殿">龙巢神殿</option>
+                        <option value="琥珀原">琥珀原</option>
+                        <option value="晨曦王座">晨曦王座</option>
+                        <option value="梦羽宝境">梦羽宝境</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="content"><i class="fa-regular fa-message me-1"></i>留言内容</label>
+                    {{ emote_editor('content', 'content', '说点什么吧 ...') }}
+                </div>
+                <button type="submit" class="btn btn-ff w-100">
+                    <i class="fa-regular fa-paper-plane me-1"></i>提交留言
+                </button>
+            </form>
+            <figure class="contact-character" aria-hidden="true">
+                <img class="contact-character-left" src="{{ url_for('static', filename='images/ff14-ui/contact-npc-072656.png') }}" alt="">
+                <img class="contact-character-center" src="{{ url_for('static', filename='images/ff14-ui/contact-npc-072658.png') }}" alt="">
+                <img class="contact-character-right" src="{{ url_for('static', filename='images/ff14-ui/contact-npc-072657.png') }}" alt="">
+            </figure>
+        </div>
+    </div>
+
+    <!-- 历史留言 -->
+    <div class="col-lg-7 animate-on-scroll animate-in-delay-2">
+        <h5 class="text-gold mb-3">
+            <i class="fa-regular fa-comments me-2"></i>历史留言
+            <span class="badge" style="background:var(--ff-gold-dim);color:var(--ff-dark);font-size:0.7rem;vertical-align:middle;">
+                {{ messages|length }}
+            </span>
+        </h5>
+
+        {% for msg in messages|reverse %}
+        <div class="msg-card animate-on-scroll">
+            <div class="msg-header">
+                <span class="msg-name">
+                    <i class="fa-regular fa-circle-user me-1"></i>{{ msg.name }}
+                </span>
+                <span class="msg-time">
+                    <i class="fa-regular fa-clock me-1"></i>{{ msg.time }}
+                </span>
+            </div>
+            <div class="msg-body">
+                <p class="mb-0 message-rich-text" style="line-height:1.7;">{{ msg.content|render_message }}</p>
+                {% if msg.replies %}
+                {% for reply in msg.replies %}
+                <div class="msg-reply mt-2">
+                    <strong class="text-gold" style="font-size:0.85rem;">
+                        <i class="fa-solid fa-reply me-1"></i>管理员回复：
+                    </strong>
+                    <span class="message-rich-text">{{ reply.content|render_message }}</span>
+                    <small class="d-block mt-1" style="color:var(--ff-text-muted);font-size:0.75rem;">{{ reply.time }}</small>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-4" style="color:var(--ff-text-muted);">
+            <i class="fa-regular fa-face-smile fa-2x mb-2 opacity-25"></i>
+            <p>暂无留言，快来第一条吧！</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ versioned_static('js/emote-picker.js') }}" defer></script>
+{% endblock %}

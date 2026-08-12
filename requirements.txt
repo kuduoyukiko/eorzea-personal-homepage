@@ -1,0 +1,6 @@
+Flask
+Flask-Login
+Pillow
+pillow-heif
+python-dotenv
+waitress>=2.1,<4

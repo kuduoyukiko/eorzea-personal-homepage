@@ -1,0 +1,146 @@
+﻿{% extends "base.html" %}
+{% block title %}现实中的我 — 最终幻想14 个人主页{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in">
+    <i class="fa-solid fa-earth-asia me-2"></i>现实中的我
+</h1>
+
+<section class="intro-card intro-card-about animate-on-scroll">
+    <div class="intro-card-copy">
+        <div class="card-header-ff">
+            <i class="fa-regular fa-address-card me-2"></i>关于我
+        </div>
+        <p class="intro-card-text">
+            {{ intro.content }}
+        </p>
+    </div>
+</section>
+
+<section class="life-album animate-on-scroll" aria-labelledby="life-album-title">
+    <div class="life-album-heading">
+        <div>
+            <h2 id="life-album-title"><i class="fa-solid fa-camera-retro" aria-hidden="true"></i>生活剪影</h2>
+            <p>镜头之外，也记录正在发生的日子。</p>
+        </div>
+        {% if life_photos %}
+        <div class="life-filter" role="tablist" aria-label="相册分类">
+            <button class="is-active" type="button" data-life-filter="all">全部</button>
+            {% for key, label in life_categories.items() %}
+            <button type="button" data-life-filter="{{ key }}">{{ label }}</button>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if life_photos %}
+    <div class="life-photo-stream" aria-live="polite">
+        {% for photo in life_photos %}
+        <button class="life-photo" type="button" data-life-category="{{ photo.category }}" data-life-full="{{ photo.url }}" data-life-description="{{ photo.description }}" aria-label="查看{{ life_categories.get(photo.category, '日常') }}照片{% if photo.description %}：{{ photo.description }}{% endif %}">
+            <img src="{{ photo.thumb_url }}" alt="{{ photo.description or life_categories.get(photo.category, '日常') ~ '照片' }}" loading="lazy">
+            <span class="life-photo-meta">
+                <span>{{ life_categories.get(photo.category, '日常') }}</span>
+                {% if photo.description %}<em>{{ photo.description }}</em>{% endif %}
+            </span>
+        </button>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="life-album-empty">
+        <i class="fa-regular fa-images" aria-hidden="true"></i>
+        <p>相册正在整理中。</p>
+    </div>
+    {% endif %}
+</section>
+
+<section class="social-links-section animate-on-scroll" aria-labelledby="social-links-title">
+    <div class="card-header-ff" id="social-links-title">
+        <i class="fa-solid fa-link me-2"></i>社交链接
+    </div>
+    <div class="row g-4">
+    {% set links = [
+        {'name': '石之家', 'url': social.shizhijia, 'image': social.shizhijia_image, 'icon': 'fa-regular fa-building'},
+        {'name': 'Steam', 'url': social.steam, 'image': social.steam_image, 'icon': 'fa-brands fa-steam'},
+        {'name': 'Oopz', 'url': social.oopz, 'image': social.oopz_image, 'icon': 'fa-solid fa-headset'},
+        {'name': 'QQ空间', 'url': social.qq, 'image': social.qq_image, 'icon': 'fa-brands fa-qq'},
+        {'name': 'Bilibili', 'url': social.bilibili, 'image': social.bilibili_image, 'icon': 'fa-brands fa-bilibili'},
+        {'name': 'B站直播', 'url': social.bilibili_live, 'image': social.bilibili_live_image, 'icon': 'fa-solid fa-video'}
+    ] %}
+
+    {% for link in links %}
+    <div class="col-md-4 col-sm-6 animate-on-scroll animate-in-delay-{{ loop.index0 % 3 + 1 }}">
+        <div class="social-card">
+            {% if link.image %}
+            <img src="{{ link.image }}" class="card-img-top" alt="{{ link.name }}" loading="lazy">
+            {% else %}
+            <div class="d-flex align-items-center justify-content-center" style="height:160px;background:var(--ff-dark3);">
+                <i class="{{ link.icon }} fa-3x" style="color:var(--ff-gold-dim);"></i>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5>{{ link.name }}</h5>
+                {% if link.url %}
+                <a href="{{ link.url }}" class="btn btn-ff" target="_blank" rel="noopener">
+                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>访问
+                </a>
+                {% else %}
+                <button class="btn btn-ff-outline" disabled>
+                    <i class="fa-solid fa-ban me-1"></i>暂无
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</section>
+
+<dialog class="life-photo-dialog" id="life-photo-dialog" aria-label="照片预览">
+    <button class="life-dialog-close" type="button" data-close-life-dialog aria-label="关闭预览"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <div class="life-dialog-image-wrap"></div>
+    <p></p>
+</dialog>
+
+{% if current_user.is_authenticated %}
+<div class="text-end mt-4 animate-on-scroll">
+    <a href="{{ url_for('admin.edit_intro') }}" class="btn btn-ff-outline btn-sm me-2">
+        <i class="fa-solid fa-pen me-1"></i>编辑介绍
+    </a>
+    <a href="{{ url_for('admin.edit_social') }}" class="btn btn-ff btn-sm">
+        <i class="fa-solid fa-pen me-1"></i>编辑社交链接
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+    const filterButtons = document.querySelectorAll('[data-life-filter]');
+    const photos = document.querySelectorAll('[data-life-category]');
+    filterButtons.forEach((button) => button.addEventListener('click', () => {
+        const category = button.dataset.lifeFilter;
+        filterButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+        photos.forEach((photo) => {
+            photo.hidden = category !== 'all' && photo.dataset.lifeCategory !== category;
+        });
+    }));
+
+    const dialog = document.querySelector('#life-photo-dialog');
+    if (!dialog) return;
+    const imageWrap = dialog.querySelector('.life-dialog-image-wrap');
+    const caption = dialog.querySelector('p');
+    photos.forEach((photo) => photo.addEventListener('click', () => {
+        const image = document.createElement('img');
+        image.src = photo.dataset.lifeFull;
+        image.alt = photo.getAttribute('aria-label');
+        imageWrap.replaceChildren(image);
+        caption.textContent = photo.dataset.lifeDescription || '';
+        dialog.showModal();
+    }));
+    dialog.addEventListener('click', (event) => {
+        if (event.target === dialog || event.target.closest('[data-close-life-dialog]')) dialog.close();
+    });
+})();
+</script>
+{% endblock %}

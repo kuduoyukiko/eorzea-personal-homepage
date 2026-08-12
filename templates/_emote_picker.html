@@ -1,0 +1,37 @@
+{% macro emote_catalog() %}
+<script type="application/json" id="emote-catalog">{{ {
+    'common': common_emote_ids,
+    'all': emote_ids,
+    'base_url': url_for('static', filename='images/emotes/')
+}|tojson }}</script>
+{% endmacro %}
+
+{% macro emote_editor(field_name, editor_id, placeholder, compact=false) %}
+<div class="emote-composer{% if compact %} emote-composer-compact{% endif %}" data-emote-composer>
+    <div class="emote-editor form-control form-control-ff" id="{{ editor_id }}" contenteditable="true"
+         role="textbox" aria-multiline="true" aria-required="true" aria-label="{{ placeholder }}"
+         aria-describedby="{{ editor_id }}-error" data-placeholder="{{ placeholder }}"></div>
+    <input type="hidden" name="{{ field_name }}" data-emote-value disabled>
+    <span class="emote-error" id="{{ editor_id }}-error" role="alert" hidden>请先写下留言内容</span>
+    <noscript><textarea class="form-control form-control-ff" name="{{ field_name }}" required placeholder="{{ placeholder }}"></textarea></noscript>
+    <div class="emote-toolbar">
+        <button class="emote-trigger" type="button" aria-expanded="false">
+            <i class="fa-regular fa-face-smile" aria-hidden="true"></i>
+            <span>情感动作</span>
+        </button>
+        <span class="emote-count" aria-live="polite">已用 0/10</span>
+    </div>
+    <section class="emote-picker" hidden aria-label="选择情感动作">
+        <div class="emote-picker-heading">
+            <strong>常用动作</strong>
+            <span>点击插入光标位置</span>
+        </div>
+        <div class="emote-grid emote-grid-common"></div>
+        <button class="emote-show-all" type="button" aria-expanded="false">
+            <span>查看全部 {{ emote_ids|length }} 个动作</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="emote-grid emote-grid-all" hidden></div>
+    </section>
+</div>
+{% endmacro %}

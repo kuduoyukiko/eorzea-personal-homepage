@@ -1,0 +1,95 @@
+﻿{% extends "base.html" %}
+{% block title %}音乐设置 — 管理后台{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in">
+    <i class="fa-solid fa-music me-2"></i>音乐播放器设置
+</h1>
+
+<div class="row g-4">
+    <div class="col-lg-8 mx-auto">
+        <form method="post" class="animate-on-scroll">
+            <!-- 默认来源 -->
+            <div class="mb-4" style="background:var(--ff-dark3);border-radius:12px;padding:1.5rem;border:1px solid var(--ff-border);">
+                <h5 class="text-gold mb-3"><i class="fa-regular fa-compass me-2"></i>默认音源</h5>
+                <select name="defaultSource" class="form-control form-control-ff">
+                    <option value="local" {{ 'selected' if config.defaultSource == 'local' else '' }}>本地播放</option>
+                    <option value="netease" {{ 'selected' if config.defaultSource == 'netease' else '' }}>网易云音乐</option>
+                    <option value="qqmusic" {{ 'selected' if config.defaultSource == 'qqmusic' else '' }}>QQ音乐</option>
+                </select>
+                <div class="form-text" style="color:var(--ff-text-muted);">访客打开页面时默认使用哪个音源</div>
+            </div>
+
+            <!-- 网易云音乐 -->
+            <div class="mb-4" style="background:var(--ff-dark3);border-radius:12px;padding:1.5rem;border:1px solid var(--ff-border);">
+                <h5 class="text-gold mb-3"><i class="fa-brands fa-napster me-2"></i>网易云音乐</h5>
+
+                <div class="mb-3">
+                    <label class="form-label" style="color:var(--ff-text-muted);">播放类型</label>
+                    <select name="netease_type" class="form-control form-control-ff">
+                        <option value="playlist" {{ 'selected' if netease.embedType == 'playlist' else '' }}>歌单</option>
+                        <option value="song" {{ 'selected' if netease.embedType == 'song' else '' }}>单曲</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" style="color:var(--ff-text-muted);">
+                        <i class="fa-regular fa-hashtag me-1"></i>歌单 / 歌曲 ID
+                    </label>
+                    <input type="text" name="netease_id" class="form-control form-control-ff"
+                        value="{{ netease.embedId or '' }}" placeholder="例如: 123456789">
+                    <div class="form-text" style="color:var(--ff-text-muted);">
+                        打开网易云歌单/歌曲页，浏览器地址栏 ?id= 后面的数字
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" name="netease_auto" class="form-check-input" id="netease_auto"
+                        {{ 'checked' if netease.autoPlay else '' }}>
+                    <label class="form-check-label" for="netease_auto" style="color:var(--ff-text-muted);">自动播放</label>
+                </div>
+            </div>
+
+            <!-- QQ音乐 -->
+            <div class="mb-4" style="background:var(--ff-dark3);border-radius:12px;padding:1.5rem;border:1px solid var(--ff-border);">
+                <h5 class="text-gold mb-3"><i class="fa-brands fa-qq me-2"></i>QQ音乐</h5>
+
+                <div class="mb-3">
+                    <label class="form-label" style="color:var(--ff-text-muted);">播放类型</label>
+                    <select name="qq_type" class="form-control form-control-ff">
+                        <option value="song" {{ 'selected' if qqmusic.embedType == 'song' else '' }}>单曲</option>
+                        <option value="playlist" {{ 'selected' if qqmusic.embedType == 'playlist' else '' }}>歌单</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" style="color:var(--ff-text-muted);">
+                        <i class="fa-regular fa-hashtag me-1"></i>歌曲 / 歌单 ID
+                    </label>
+                    <input type="text" name="qq_id" class="form-control form-control-ff"
+                        value="{{ qqmusic.embedId or '' }}" placeholder="例如: 123456789">
+                    <div class="form-text" style="color:var(--ff-text-muted);">
+                        打开QQ音乐页面，songid= 后面的数字
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" name="qq_auto" class="form-check-input" id="qq_auto"
+                        {{ 'checked' if qqmusic.autoPlay else '' }}>
+                    <label class="form-check-label" for="qq_auto" style="color:var(--ff-text-muted);">自动播放</label>
+                </div>
+            </div>
+
+            <!-- 保存按钮 -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-ff">
+                    <i class="fa-regular fa-floppy-disk me-1"></i>保存设置
+                </button>
+                <a href="{{ url_for('admin.dashboard') }}" class="btn btn-ff-outline ms-2">
+                    <i class="fa-solid fa-arrow-left me-1"></i>返回
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

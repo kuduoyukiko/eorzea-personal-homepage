@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>编辑职业等级</h1>
+<form method="post">
+    {% for category, cat_name in [('tanks','坦克'), ('healers','治疗'), ('melee','近战'), ('ranged_physical','远程物理'), ('ranged_magic','远程魔法'), ('crafters','能工巧匠'), ('gatherers','大地使者')] %}
+    <h3>{{ cat_name }}</h3>
+    <div class="row">
+        {% for job in jobs[category] %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">{{ job.full_name }} ({{ job.abbr }})</h6>
+                    <input type="hidden" name="{{ category }}_{{ loop.index0 }}_full_name" value="{{ job.full_name }}">
+                    <input type="hidden" name="{{ category }}_{{ loop.index0 }}_abbr" value="{{ job.abbr }}">
+                    <div class="mb-2">
+                        <label class="form-label">等级</label>
+                        <input type="number" name="{{ category }}_{{ loop.index0 }}_level" class="form-control" value="{{ job.level }}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">图标URL</label>
+                        <input type="url" name="{{ category }}_{{ loop.index0 }}_icon" class="form-control" value="{{ job.icon }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">返回</a>
+</form>
+{% endblock %}

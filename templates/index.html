@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% block title %}Yukiko's Chronicle — 双角色冒险档案{% endblock %}
+{% block body_class %}archive-home archive-reference{% endblock %}
+{% block content_class %}home-archive-shell{% endblock %}
+
+{% block head_extra %}
+<script>
+    try {
+        if (localStorage.getItem('yukiko-chronicle-intro-seen')) {
+            document.documentElement.classList.add('journey-returning', 'journey-entered', 'journey-dismissed');
+        } else {
+            document.documentElement.classList.add('journey-first');
+        }
+    } catch (error) {
+        document.documentElement.classList.add('journey-first');
+    }
+</script>
+{% endblock %}
+
+{% block before_navigation %}
+<section class="journey-intro" id="journeyIntro" aria-label="旅程序章">
+    <video class="journey-intro-video" id="journeyIntroVideo" muted loop playsinline preload="none"{% if home.bg_images %} poster="{{ home.bg_images[0] }}"{% endif %}>
+        {% if intro_video_url %}<source data-src="{{ intro_video_url }}" type="video/mp4">{% endif %}
+    </video>
+    <div class="journey-intro-shade" aria-hidden="true"></div>
+    <div class="journey-intro-mark" aria-hidden="true">
+        <span>YUKIKO'S CHRONICLE</span>
+    </div>
+    <a class="journey-enter" id="journeyEnter" href="#main-content">
+        <span class="journey-enter-kicker">BEGIN THE JOURNEY</span>
+        <strong>向下滑动，踏入艾欧泽亚</strong>
+        <i aria-hidden="true"></i>
+    </a>
+</section>
+<button class="journey-replay" id="journeyReplay" type="button" aria-label="重温旅程序章">
+    <i class="fa-solid fa-play" aria-hidden="true"></i>
+    <span>重温序章</span>
+</button>
+{% endblock %}
+
+{% block content %}
+{% if false %}
+{% set account_a = home.accounts[0] %}
+{% set account_b = home.accounts[1] %}
+
+<section class="chronicle-hero animate-in">
+    {% if home.bg_images %}
+    <div class="chronicle-hero-bg" style="background-image:url('{{ home.bg_images[0] }}');"></div>
+    {% endif %}
+    <div class="chronicle-hero-shade"></div>
+    <div class="aether-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <header class="chronicle-heading">
+        <span class="chronicle-kicker">ADVENTURER CHRONICLE</span>
+        <h1>KUDOU YUKIKO</h1>
+        <p>Two characters, one journey.</p>
+        <span class="chronicle-heading-cn">两个角色，一段旅程；两个世界，一个故事。</span>
+        <nav class="hero-actions" aria-label="首页快捷入口">
+            <a class="hero-action hero-action-primary" href="#character-archives">
+                <i class="fa-solid fa-id-card" aria-hidden="true"></i>进入角色档案
+            </a>
+            <a class="hero-action" href="#chronicle-paths">
+                继续旅程<i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+            </a>
+        </nav>
+    </header>
+
+    <div class="dual-archive" id="character-archives">
+        {% for account in home.accounts %}
+        <article class="archive-character archive-character-{{ loop.index }}">
+            <div class="character-portrait">
+                {% if account.standing_image %}
+                <img src="{{ account.standing_image }}" alt="{{ account.id }}角色立绘" loading="eager" fetchpriority="high">
+                {% elif account.avatar %}
+                <img src="{{ account.avatar }}" alt="{{ account.id }}头像" loading="eager" fetchpriority="high">
+                {% endif %}
+            </div>
+            <div class="character-record">
+                <span class="record-number">ARCHIVE / 0{{ loop.index }}</span>
+                <h2>{{ account.id or ('角色 ' ~ loop.index) }}</h2>
+                <dl>
+                    <div>
+                        <dt>WORLD</dt>
+                        <dd>{{ account.server or 'Eorzea' }}</dd>
+                    </div>
+                    <div>
+                        <dt>DATA CENTER</dt>
+                        <dd>{{ account.region or 'Crystal' }}</dd>
+                    </div>
+                </dl>
+                <a href="{{ url_for('characters') }}" class="archive-link">
+                    查看角色档案 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+
+        <div class="soul-crystal" aria-label="灵魂水晶">
+            <span class="crystal-visual" aria-hidden="true">
+                <img
+                    class="crystal-art"
+                    src="{{ url_for('static', filename='images/aether-crystal.png') }}"
+                    alt=""
+                    loading="eager"
+                    fetchpriority="high"
+                >
+            </span>
+            <small>CRYSTAL ARCHIVE</small>
+        </div>
+    </div>
+
+    <a class="scroll-cue" href="#chronicle-paths" aria-label="继续浏览">
+        <span>EXPLORE</span>
+        <i class="fa-solid fa-chevron-down"></i>
+    </a>
+</section>
+
+<section class="moogle-message animate-on-scroll">
+    <img src="/static/images/moogle-postman.webp" alt="邮差莫古力" loading="lazy">
+    <div class="moogle-copy">
+        <span class="section-kicker">A LETTER FROM THE ARCHIVE</span>
+        <h2>Kupo! 欢迎回来，冒险者。</h2>
+        <p>今天也要把艾欧泽亚与现实世界的小小回忆，好好收藏起来。</p>
+        <a href="{{ url_for('contact') }}" class="chronicle-button">
+            <i class="fa-solid fa-feather-pointed"></i>打开留言簿
+        </a>
+    </div>
+</section>
+
+<section class="chronicle-paths" id="chronicle-paths">
+    <header class="section-heading animate-on-scroll">
+        <span class="section-kicker">CONTINUE THE JOURNEY</span>
+        <h2>选择下一段故事</h2>
+        <p>从水晶的记忆出发，探索属于两个世界的私人档案。</p>
+    </header>
+
+    <div class="path-grid">
+        <a href="{{ url_for('gallery') }}" class="path-card path-card-memories animate-on-scroll">
+            {% if home.bg_images|length > 1 %}
+            <span class="path-cover" style="background-image:url('{{ home.bg_images[1] }}');"></span>
+            {% endif %}
+            <span class="path-overlay"></span>
+            <span class="path-index">01</span>
+            <span class="path-copy">
+                <small>CRYSTAL MEMORIES</small>
+                <strong>艾欧泽亚的时光</strong>
+                <em>收藏旅途中闪闪发光的瞬间</em>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square path-arrow"></i>
+        </a>
+
+        <a href="{{ url_for('gallery') }}" class="path-card path-card-sanctuary animate-on-scroll animate-in-delay-1">
+            {% if home.bg_images|length > 2 %}
+            <span class="path-cover" style="background-image:url('{{ home.bg_images[2] }}');"></span>
+            {% endif %}
+            <span class="path-overlay"></span>
+            <span class="path-index">02</span>
+            <span class="path-copy">
+                <small>MY LITTLE SANCTUARY</small>
+                <strong>房屋庭院</strong>
+                <em>回到灯火温柔的小小归处</em>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square path-arrow"></i>
+        </a>
+
+        <a href="{{ url_for('contact') }}" class="path-card path-card-journal animate-on-scroll animate-in-delay-2">
+            <span class="path-symbol"><i class="fa-solid fa-book-open"></i></span>
+            <span class="path-index">03</span>
+            <span class="path-copy">
+                <small>ADVENTURER'S GUESTBOOK</small>
+                <strong>留言簿</strong>
+                <em>留下相遇、问候与旅途回声</em>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square path-arrow"></i>
+        </a>
+
+        <a href="{{ url_for('social') }}" class="path-card path-card-beyond animate-on-scroll animate-in-delay-3">
+            <img class="path-mascot" src="/static/images/mascots/chocobo-guide.png" alt="" loading="lazy">
+            <span class="path-index">04</span>
+            <span class="path-copy">
+                <small>BEYOND EORZEA</small>
+                <strong>现实中的我</strong>
+                <em>水晶之外，也是一场真实的旅行</em>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square path-arrow"></i>
+        </a>
+    </div>
+</section>
+
+{% if home.bg_images %}
+<section class="memory-strip animate-on-scroll">
+    <div class="memory-strip-copy">
+        <span class="section-kicker">A PLACE BETWEEN WORLDS</span>
+        <h2>愿光指引每一次归途</h2>
+        <p>May the light guide every journey home.</p>
+    </div>
+    <div class="memory-thumbnails">
+        {% for img in home.bg_images[:3] %}
+        <figure>
+            <img src="{{ img }}" alt="冒险回忆 {{ loop.index }}" loading="lazy">
+            <figcaption>MEMORY / 0{{ loop.index }}</figcaption>
+        </figure>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if current_user.is_authenticated %}
+<div class="text-end mt-4 animate-on-scroll">
+    <a href="{{ url_for('admin.edit_home') }}" class="btn btn-ff btn-sm">
+        <i class="fa-solid fa-pen me-1"></i>编辑首页
+    </a>
+</div>
+{% endif %}
+{% endif %}
+
+{% set account_a = home.accounts[0] %}
+{% set account_b = home.accounts[1] %}
+
+<section class="reference-hero animate-in">
+    {% if home.bg_images %}<div class="reference-hero-bg" style="background-image:url('{{ home.bg_images[0] }}');"></div>{% endif %}
+    <div class="reference-hero-scrim"></div>
+    <div class="reference-title">
+        <img class="reference-title-crystal" src="{{ url_for('static', filename='images/archive-crystal.png') }}" alt="">
+        <span>FINAL FANTASY XIV</span><h1>KUDOU YUKIKO</h1><em>Two souls, one journey.</em><p>两个角色，一段旅程；<br>两个世界，一个故事。</p>
+    </div>
+    <article class="reference-profile reference-profile-left">
+        {% if account_a.standing_image %}<img class="reference-profile-art" src="{{ account_a.standing_image }}" alt="{{ account_a.id }}角色立绘" loading="eager">{% endif %}
+        <div class="reference-profile-card"><span class="reference-profile-script">{{ account_a.id }}</span><h2>{{ account_a.id }}</h2><dl><div><dt>WORLD</dt><dd>{{ account_a.server or 'Eorzea' }}</dd></div><div><dt>DATA CENTER</dt><dd>{{ account_a.region or 'Crystal' }}</dd></div></dl><a href="{{ url_for('characters') }}">查看档案 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
+    </article>
+      <div class="reference-aether" aria-hidden="true"><img src="{{ url_for('static', filename='images/aether-crystal-glass.png') }}" alt=""></div>
+    <article class="reference-profile reference-profile-right">
+        {% if account_b.standing_image %}<img class="reference-profile-art" src="{{ account_b.standing_image }}" alt="{{ account_b.id }}角色立绘" loading="eager">{% endif %}
+        <div class="reference-profile-card"><span class="reference-profile-script">{{ account_b.id }}</span><h2>{{ account_b.id }}</h2><dl><div><dt>WORLD</dt><dd>{{ account_b.server or 'Eorzea' }}</dd></div><div><dt>DATA CENTER</dt><dd>{{ account_b.region or 'Crystal' }}</dd></div></dl><a href="{{ url_for('characters') }}">查看档案 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
+    </article>
+    <aside class="reference-welcome"><img class="reference-welcome-postman" src="/static/images/moogle-postman.webp" alt="邮差莫古力" loading="lazy"><div><em>Kupo!</em><strong>欢迎回来，冒险者！</strong><p>今天也要把艾欧泽亚的美好回忆收藏起来。</p><a href="{{ url_for('contact') }}">打开留言簿 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></aside>
+</section>
+
+<section class="reference-archive-grid" aria-label="冒险档案入口">
+    <article class="reference-panel reference-journal animate-on-scroll">
+        <header><i class="fa-regular fa-comments" aria-hidden="true"></i><div><h2>留言簿</h2><span>GUESTBOOK</span></div></header>
+        <div class="reference-guestbook-list">
+            {% for msg in recent_messages %}
+            <article class="reference-entry reference-message">
+                <div class="reference-message-meta">
+                    <strong>{{ msg.name }}</strong>
+                    <time datetime="{{ msg.time }}">{{ msg.time[:10] }}</time>
+                </div>
+                <p class="message-rich-text">{{ msg.content|render_message }}</p>
+                {% if msg.replies %}
+                <div class="reference-message-reply">
+                    <small>YUKIKO REPLIED</small>
+                    <p class="message-rich-text">{{ msg.replies[-1].content|render_message }}</p>
+                </div>
+                {% endif %}
+            </article>
+            {% else %}
+            <div class="reference-guestbook-empty">
+                <i class="fa-regular fa-envelope-open" aria-hidden="true"></i>
+                <p>还没有留言，来留下第一句话吧。</p>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="reference-panel-link" href="{{ url_for('contact') }}">进入留言簿 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </article>
+    <article class="reference-panel reference-sanctuary animate-on-scroll animate-in-delay-1"><header><i class="fa-solid fa-house" aria-hidden="true"></i><div><h2>房屋庭院</h2><span>SANCTUARY</span></div></header>{% if home.bg_images|length > 2 %}<img class="reference-sanctuary-main" src="{{ home.bg_images[2] }}" alt="房屋庭院回忆" loading="lazy">{% endif %}<div class="reference-mini-gallery">{% for image in home.bg_images[:3] %}<img src="{{ image }}" alt="庭院回忆 {{ loop.index }}" loading="lazy">{% endfor %}</div><a class="reference-panel-link" href="{{ url_for('gallery') }}">参观我的家 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></article>
+    {% set memory_images = (home.bg_images + home.bg_images[:1])[:4] %}
+    <article class="reference-panel reference-memories animate-on-scroll animate-in-delay-2"><header><i class="fa-solid fa-camera-retro" aria-hidden="true"></i><div><h2>艾欧泽亚的时光</h2><span>MEMORIES</span></div></header><div class="reference-memory-grid">{% for image in memory_images %}<img src="{{ image }}" alt="艾欧泽亚的时光 {{ loop.index }}" loading="lazy">{% endfor %}</div><a class="reference-panel-link" href="{{ url_for('gallery') }}">浏览相册 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></article>
+</section>
+
+<section class="reference-beyond animate-on-scroll"><div class="reference-beyond-copy"><span><i class="fa-solid fa-globe" aria-hidden="true"></i> 现实中的我</span><small>BEYOND EORZEA</small><p>水晶之外，也是一场真诚的旅行。</p></div><div class="reference-beyond-links"><a href="{{ url_for('social') }}"><i class="fa-solid fa-bookmark" aria-hidden="true"></i>生活记录</a><a href="{{ url_for('social') }}"><i class="fa-solid fa-plane" aria-hidden="true"></i>旅行足迹</a><a href="{{ url_for('gallery') }}"><i class="fa-solid fa-camera" aria-hidden="true"></i>摄影时光</a></div><img src="/static/images/mascots/chocobo-guide.png" alt="陆行鸟向导" loading="lazy"><a class="reference-beyond-cta" href="{{ url_for('social') }}">探索更多 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></section>
+
+<footer class="reference-signoff"><img src="{{ url_for('static', filename='images/archive-crystal.png') }}" alt=""><span>无论身在何方，光都会指引前路。<em>No matter where you are, the Light will guide you.</em></span><img src="{{ url_for('static', filename='images/archive-crystal.png') }}" alt=""></footer>
+{% if current_user.is_authenticated %}<div class="text-end mt-4"><a href="{{ url_for('admin.edit_home') }}" class="btn btn-ff btn-sm"><i class="fa-solid fa-pen me-1"></i>编辑首页</a></div>{% endif %}
+{% endblock %}

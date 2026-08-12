@@ -1,0 +1,68 @@
+﻿{% extends "base.html" %}
+{% block title %}职业 — 最终幻想14 个人主页{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in">
+    <span class="page-title-icon ff14-glyph" style="--ff14-icon:url('{{ url_for('static', filename='images/ff14-ui/Armoury_SoulCrystal.svg') }}')" aria-hidden="true"></span>职业等级
+</h1>
+
+{% set categories = [
+    ('tanks','坦克','clear_tank.png'),
+    ('healers','治疗','clear_healer.png'),
+    ('melee','近战','clear_dps.png'),
+    ('ranged_physical','远程物理','clear_ranged.png'),
+    ('ranged_magic','远程魔法','clear_dps_magic.png'),
+    ('crafters','能工巧匠','clear_doh.png'),
+    ('gatherers','大地使者','clear_dol.png')
+] %}
+
+{% set soul_crystals = {
+    'WAR':'war.png', 'PLD':'pld.png', 'DRK':'drk.png', 'GNB':'gnb.png',
+    'WHM':'whm.png', 'SCH':'sch.png', 'AST':'ast.png', 'SGE':'sge.png',
+    'MNK':'mnk.png', 'DRG':'drg.png', 'NIN':'nin.png', 'SAM':'sam.png', 'RPR':'rpr.png',
+    'BRD':'brd.png', 'MCH':'mch.png', 'DNC':'dnc.png',
+    'BLM':'blm.png', 'SMN':'smn.png', 'RDM':'rdm.png'
+} %}
+
+{% for category, cat_name, icon in categories %}
+<div class="job-category animate-on-scroll">
+    <h3>
+        <span class="job-category-icon ff14-glyph" style="--ff14-icon:url('{{ url_for('static', filename='images/ff14-ui/' ~ icon) }}')" aria-hidden="true"></span>
+        {{ cat_name }}
+    </h3>
+    <div class="row g-2">
+        {% for job in jobs[category] %}
+        <div class="col-md-3 col-sm-4 col-6">
+            <div class="job-card{% if job.abbr in soul_crystals %} has-soul-crystal{% endif %}">
+                {% if job.abbr in soul_crystals %}
+                <img
+                    class="job-soul-crystal"
+                    src="{{ url_for('static', filename='images/soul-crystals-cutout/' ~ soul_crystals[job.abbr]) }}"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                >
+                {% endif %}
+                <div class="job-card-content">
+                    {% if job.icon %}
+                    <img class="job-icon" src="{{ job.icon }}" alt="{{ job.abbr }}" loading="lazy">
+                    {% endif %}
+                    <div class="job-name">{{ job.full_name }}</div>
+                    <div class="job-abbr">{{ job.abbr }}</div>
+                    <div class="job-level">{{ job.level }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+<div class="text-end mt-4 animate-on-scroll">
+    <a href="{{ url_for('admin.edit_jobs') }}" class="btn btn-ff btn-sm">
+        <i class="fa-solid fa-pen me-1"></i>编辑职业等级
+    </a>
+</div>
+{% endif %}
+{% endblock %}

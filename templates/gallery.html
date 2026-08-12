@@ -1,0 +1,154 @@
+﻿{% extends "base.html" %}
+{% block title %}艾欧泽亚的时光 — 最终幻想14 个人主页{% endblock %}
+
+{% block content %}
+<h1 class="page-title animate-in">
+    <i class="fa-solid fa-images me-2"></i>艾欧泽亚的时光
+</h1>
+
+<!-- 分类切换 -->
+<div class="gallery-tabs animate-in" id="galleryTabs">
+    <button class="gallery-tab active" type="button" data-target="all" aria-selected="true">
+        <i class="fa-solid fa-layer-group me-1"></i>全部
+    </button>
+    <button class="gallery-tab" type="button" data-target="group-acc1" aria-selected="false">
+        <i class="fa-regular fa-user me-1"></i>{{ site_config.navbar_logo and '怎么睡不醒' or '账号1' }}
+    </button>
+    <button class="gallery-tab" type="button" data-target="group-both" aria-selected="false">
+        <i class="fa-solid fa-heart me-1"></i>合照
+    </button>
+    <button class="gallery-tab" type="button" data-target="group-acc2" aria-selected="false">
+        <i class="fa-regular fa-user me-1"></i>{{ site_config.navbar_logo and '月见mie' or '账号2' }}
+    </button>
+</div>
+
+<!-- 内容分组 -->
+{% set gallery_files = acc1 + both + acc2 %}
+{% set pinned_files = gallery_files | selectattr('sticky') | list %}
+{% set featured = pinned_files[0] if pinned_files else (gallery_files[0] if gallery_files else none) %}
+{% if featured %}
+{% set featured_account = featured.get('account', '1') %}
+{% set featured_group = 'group-both' if featured_account == 'both' else ('group-acc2' if featured_account == '2' else 'group-acc1') %}
+<article class="gallery-feature animate-in" id="galleryFeature" data-group="{{ featured_group }}">
+    {% if featured.key.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')) %}
+    <a href="{{ featured.url }}" target="_blank">
+        <img src="{{ featured.thumb_url }}" alt="精选记忆" loading="eager" fetchpriority="high">
+        <div class="gallery-feature-caption">
+            <span class="gallery-feature-label"><i class="fa-solid fa-star me-1"></i>精选记忆</span>
+            {% if featured.description %}<span>{{ featured.description }}</span>{% endif %}
+        </div>
+    </a>
+    {% endif %}
+</article>
+{% endif %}
+
+<div class="gallery-grid" id="galleryGrid" data-view="all">
+    {% if acc1 %}
+    <div class="gallery-group" id="group-acc1" data-layout="portrait">
+        <h2 class="gallery-group-title"><span>怎么睡不醒</span><small>个人记忆</small></h2>
+        <div class="gallery-track">
+        {% for file in acc1 %}
+        <div class="gallery-item animate-on-scroll" data-account="1">
+            {% if file.key.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')) %}
+            <a href="{{ file.url }}" target="_blank">
+                <img src="{{ file.thumb_url }}" alt="截图" loading="{% if loop.index <= 3 %}eager{% else %}lazy{% endif %}" fetchpriority="{% if loop.index <= 2 %}high{% else %}auto{% endif %}">
+                <div class="overlay">
+                    {% if file.description %}<span class="desc">{{ file.description }}</span>{% endif %}
+                    <span class="desc" style="font-size:0.75rem;color:var(--ff-gold-dim);">
+                        <i class="fa-regular fa-image"></i> 点击查看原图
+                    </span>
+                </div>
+            </a>
+            {% elif file.key.lower().endswith(('.mp4', '.webm', '.ogg', '.mov')) %}
+            <video preload="metadata" controls>
+                <source src="{{ file.url }}">
+            </video>
+            <div class="overlay">
+                {% if file.description %}<span class="desc">{{ file.description }}</span>{% endif %}
+            </div>
+            {% endif %}
+            {% if file.sticky %}<span class="badge-sticky"><i class="fa-solid fa-thumbtack me-1"></i>置顶</span>{% endif %}
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if both %}
+    <div class="gallery-group" id="group-both" data-layout="story">
+        <h2 class="gallery-group-title"><span>合照</span><small>同行星轨</small></h2>
+        <div class="gallery-track">
+        {% for file in both %}
+        <div class="gallery-item animate-on-scroll" data-account="both">
+            {% if file.key.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')) %}
+            <a href="{{ file.url }}" target="_blank">
+                <img src="{{ file.thumb_url }}" alt="合照" loading="{% if loop.index <= 3 %}eager{% else %}lazy{% endif %}" fetchpriority="{% if loop.index <= 2 %}high{% else %}auto{% endif %}">
+                <div class="overlay">
+                    {% if file.description %}<span class="desc">{{ file.description }}</span>{% endif %}
+                    <span class="desc" style="font-size:0.75rem;color:var(--ff-gold-dim);">
+                        <i class="fa-regular fa-image"></i> 点击查看原图
+                    </span>
+                </div>
+            </a>
+            {% elif file.key.lower().endswith(('.mp4', '.webm', '.ogg', '.mov')) %}
+            <video preload="metadata" controls>
+                <source src="{{ file.url }}">
+            </video>
+            <div class="overlay">
+                {% if file.description %}<span class="desc">{{ file.description }}</span>{% endif %}
+            </div>
+            {% endif %}
+            {% if file.sticky %}<span class="badge-sticky"><i class="fa-solid fa-thumbtack me-1"></i>置顶</span>{% endif %}
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if acc2 %}
+    <div class="gallery-group" id="group-acc2" data-layout="portrait">
+        <h2 class="gallery-group-title"><span>月见mie</span><small>个人记忆</small></h2>
+        <div class="gallery-track">
+        {% for file in acc2 %}
+        <div class="gallery-item animate-on-scroll" data-account="2">
+            {% if file.key.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')) %}
+            <a href="{{ file.url }}" target="_blank">
+                <img src="{{ file.thumb_url }}" alt="截图" loading="{% if loop.index <= 3 %}eager{% else %}lazy{% endif %}" fetchpriority="{% if loop.index <= 2 %}high{% else %}auto{% endif %}">
+                <div class="overlay">
+                    {% if file.description %}<span class="desc">{{ file.description }}</span>{% endif %}
+                    <span class="desc" style="font-size:0.75rem;color:var(--ff-gold-dim);">
+                        <i class="fa-regular fa-image"></i> 点击查看原图
+                    </span>
+                </div>
+            </a>
+            {% elif file.key.lower().endswith(('.mp4', '.webm', '.ogg', '.mov')) %}
+            <video preload="metadata" controls>
+                <source src="{{ file.url }}">
+            </video>
+            <div class="overlay">
+                {% if file.description %}<span class="desc">{{ file.description }}</span>{% endif %}
+            </div>
+            {% endif %}
+            {% if file.sticky %}<span class="badge-sticky"><i class="fa-solid fa-thumbtack me-1"></i>置顶</span>{% endif %}
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if not acc1 and not acc2 and not both %}
+<div class="text-center py-5" style="color:var(--ff-text-muted);">
+    <i class="fa-solid fa-image fa-3x mb-3 opacity-25"></i>
+    <p>暂无图片，快去上传一些美照吧！</p>
+</div>
+{% endif %}
+
+{% if current_user.is_authenticated %}
+<div class="text-end mt-4 animate-on-scroll">
+    <a href="{{ url_for('admin.gallery_upload') }}" class="btn btn-ff btn-sm">
+        <i class="fa-solid fa-upload me-1"></i>管理上传
+    </a>
+</div>
+{% endif %}
+{% endblock %}
