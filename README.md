@@ -88,6 +88,22 @@ SITE_MODE=dual    # 双角色：展示和编辑两个角色
 
 单角色模式会使用角色 1 的资料并采用居中首页构图，同时隐藏双人记忆内容。角色 2 的已有数据不会被删除；切回 `dual` 后会恢复显示。
 
+### 新留言邮件通知（QQ 邮箱）
+
+在 QQ 邮箱网页版开启 SMTP 服务并生成授权码，然后在 `.env` 中填写：
+
+```dotenv
+MAIL_SMTP_HOST=smtp.qq.com
+MAIL_SMTP_PORT=465
+MAIL_TIMEOUT=10
+MAIL_SENDER=你的发件QQ邮箱@qq.com
+MAIL_AUTH_CODE=你的QQ邮箱SMTP授权码
+MAIL_RECIPIENT=接收通知的邮箱@example.com
+SITE_URL=http://你的域名
+```
+
+`MAIL_AUTH_CODE` 是 QQ 邮箱生成的 SMTP 授权码，不是 QQ 密码。请勿把 `.env` 提交到 Git。只有访客成功提交新留言时才会通知；邮件发送失败不会影响留言保存，错误会记录在服务器日志中。
+
 可以使用下面的命令生成 `SECRET_KEY`：
 
 ```bash

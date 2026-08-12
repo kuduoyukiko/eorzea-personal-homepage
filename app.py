@@ -43,6 +43,7 @@ from flask_login import (
     current_user,
 )
 from werkzeug.utils import secure_filename
+from utils.email_notifications import queue_new_message_notification
 from markupsafe import Markup, escape
 
 from config import Config
@@ -258,16 +259,19 @@ def contact():
         if game_id and server and content and validate_emote_content(content):
             name = f"{game_id}@{server}"  # 组合成“ID@服务器”格式
             messages = data_utils.read_json("messages.json")
-            messages.append(
-                {
+            message_data = {
                     "id": str(uuid.uuid4()),
                     "name": name,
                     "content": content,
                     "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     "replies": [],
                 }
-            )
+            messages.append(message_data)
             data_utils.write_json("messages.json", messages)
+            site_url = app.config.get("SITE_URL") or request.url_root.rstrip("/")
+            queue_new_message_notification(
+                app, message_data, f"{site_url}{url_for('admin.messages')}"
+            )
             flash("留言已提交，等待管理员回复", "success")
         elif content and not validate_emote_content(content):
             flash("每条留言最多使用 10 个有效的情感动作", "danger")
