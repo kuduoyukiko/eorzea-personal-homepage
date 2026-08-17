@@ -227,13 +227,35 @@ body.nier-terminal::after {
 .nier-terminal .page-title-icon { color: var(--nt-gold); filter: grayscale(.6); }
 
 /* Shared panels and controls */
-.nier-terminal :is(.card,.job-card,.social-card,.msg-card,.intro-card,.gallery-feature,.gallery-item,.life-photo,.mail-settings-panel,.reference-panel,.reference-beyond,.reference-profile-card) {
+.nier-terminal :is(.card,.job-card,.social-card,.msg-card,.gallery-feature,.gallery-item,.life-photo,.mail-settings-panel,.reference-panel,.reference-beyond,.reference-profile-card) {
     border: 1px solid var(--nt-line) !important;
     border-radius: 0 !important;
     color: var(--nt-ink);
     background: rgba(235,230,219,.72) !important;
     box-shadow: 5px 6px 0 rgba(50,47,39,.08) !important;
     backdrop-filter: none !important;
+}
+.nier-terminal .intro-card {
+    border: 1px solid var(--nt-line) !important;
+    border-radius: 0 !important;
+    color: var(--nt-ink);
+    box-shadow: 5px 6px 0 rgba(50,47,39,.08) !important;
+}
+.nier-terminal .intro-card-about {
+    background-image: linear-gradient(90deg, rgba(232,227,216,.04), rgba(32,31,27,.2)), url('../images/ff14-ui/about-071900.png');
+    background-position: left center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.nier-terminal .intro-card-copy {
+    background: rgba(31,31,27,.88);
+    box-shadow: -18px 0 34px rgba(31,31,27,.22);
+}
+@media (max-width: 767.98px) {
+    .nier-terminal .intro-card-about {
+        background: url('../images/ff14-ui/about-071900.png') 24% top / auto 310px no-repeat, var(--nt-panel-dark);
+    }
+    .nier-terminal .intro-card-copy { background: transparent; box-shadow: none; }
 }
 .nier-terminal .char-card {
     border: 1px solid var(--nt-line) !important;
