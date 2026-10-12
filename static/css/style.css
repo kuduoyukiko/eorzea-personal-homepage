@@ -778,7 +778,7 @@ a,
       isolation: isolate;
   }
 .reference-hero-bg,.reference-hero-scrim { position:absolute; inset:0; z-index:-2; }
-.reference-hero-bg { background-position:center; background-size:cover; filter:brightness(.7) saturate(.98) contrast(1.12); transform:scale(1.02); }
+.reference-hero-bg { background-position:center; background-size:cover; filter:brightness(.62) saturate(.78) contrast(1.04); transform:scale(1.02); }
 .reference-hero-scrim { z-index:-1; background:linear-gradient(125deg,rgba(255,255,255,.1),rgba(113,177,255,.035) 17%,transparent 40%,rgba(54,120,187,.055) 74%,rgba(255,255,255,.045)),rgba(7,13,30,.3),linear-gradient(180deg,rgba(4,6,15,.18),transparent 42%,rgba(4,6,15,.44)); box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(0,6,20,.3); backdrop-filter:blur(2px) saturate(112%) brightness(.98); -webkit-backdrop-filter:blur(2px) saturate(112%) brightness(.98); }
 
 .reference-title { position:relative; z-index:5; width:min(440px,45%); margin:0 auto; padding-top:3.1rem; text-align:center; color:var(--ref-copy); }
@@ -3122,6 +3122,200 @@ body::before {
 .home-archive-shell:hover {
     border-color: transparent;
     box-shadow: none;
+}
+
+/* Shared homepage hierarchy: content rhythm is independent of the theme skin. */
+body.archive-reference .content-card.home-archive-shell {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+body.archive-reference .home-archive-shell::before,
+body.archive-reference .home-archive-shell::after { display: none; }
+
+.archive-reference .main-wrapper { position: relative; z-index: 3; }
+.archive-reference .reference-title { width: min(580px, 54%); }
+.archive-reference .reference-title h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
+.archive-reference .reference-title > span { font-size: .6875rem; letter-spacing: .24em; }
+.archive-reference .reference-title p { margin-top: 1rem; font-size: .875rem; line-height: 1.8; }
+.archive-reference .reference-aether { top: 65%; }
+.archive-reference .reference-aether img { width: 280px; }
+.archive-reference .reference-profile-script { display: none; }
+.archive-reference .reference-profile-card {
+    width: clamp(216px, 17vw, 248px);
+    padding: 1.5rem;
+}
+.archive-reference .reference-profile-left .reference-profile-card { left: 2rem; }
+.archive-reference .reference-profile-right .reference-profile-card { right: 2rem; }
+.archive-reference .reference-profile-card h2 {
+    margin: 0 0 1rem;
+    font-size: 1.375rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+.archive-reference .reference-profile-card dl { padding: .75rem 0; border-bottom: 0; }
+.archive-reference .reference-profile-card dl div { align-items: baseline; gap: .75rem; }
+.archive-reference .reference-profile-card dl div + div { margin-top: .625rem; }
+.archive-reference .reference-profile-card dt { font-size: .6875rem; letter-spacing: .035em; }
+.archive-reference .reference-profile-card dd { font-size: .8125rem; overflow-wrap: anywhere; }
+.archive-reference :is(.reference-profile-card a, .reference-panel-link, .reference-beyond-cta) {
+    min-height: 44px;
+    padding: .625rem 1rem;
+    font-size: .8125rem;
+    line-height: 1.4;
+    letter-spacing: .025em;
+}
+.archive-reference .reference-welcome { padding: 1.25rem 1.25rem 1.25rem 5rem; }
+.archive-reference .reference-welcome strong { margin: .25rem 0 .5rem; font-size: .9375rem; }
+.archive-reference .reference-welcome p { font-size: .8125rem; line-height: 1.7; }
+.archive-reference .reference-welcome a { padding-block: .375rem; font-size: .8125rem; }
+.archive-reference .reference-archive-grid {
+    margin-top: 2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+.archive-reference .reference-panel {
+    min-width: 0;
+    min-height: 0;
+    padding: 1.5rem;
+    border-color: rgba(205,231,255,.16);
+    background: rgba(12,21,40,.88);
+    box-shadow: 0 8px 24px rgba(0,0,0,.16);
+}
+.archive-reference .reference-panel::before { display: none; }
+.archive-reference .reference-panel header { margin-bottom: 1.5rem; gap: .75rem; }
+.archive-reference .reference-panel header > i {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: 0;
+    background: rgba(210,176,105,.08);
+}
+.archive-reference .reference-panel h2 { font-size: 1.375rem; font-weight: 600; line-height: 1.4; }
+.archive-reference .reference-panel header span { margin-top: .25rem; font-size: .6875rem; letter-spacing: .12em; }
+.archive-reference .reference-entry { padding: 1rem 0; }
+.archive-reference .reference-message:first-child { padding-top: 0; }
+.archive-reference .reference-entry p { font-size: .875rem; line-height: 1.75; }
+.archive-reference .reference-message-meta { gap: .5rem; flex-wrap: wrap; }
+.archive-reference .reference-message-meta strong { font-size: .875rem; }
+.archive-reference .reference-message-meta time { color: #a1acc0; font-size: .6875rem; letter-spacing: 0; }
+.archive-reference .reference-entry small { font-size: .6875rem; letter-spacing: .075em; }
+.archive-reference .reference-message-reply { margin-top: .75rem; padding: .75rem; }
+.archive-reference .reference-guestbook-empty p { font-size: .875rem; }
+.archive-reference .reference-sanctuary-main { height: auto; aspect-ratio: 16 / 9; }
+.archive-reference .reference-mini-gallery { margin-top: .5rem; gap: .5rem; }
+.archive-reference .reference-mini-gallery img { height: auto; aspect-ratio: 4 / 3; }
+.archive-reference .reference-memory-grid { gap: .5rem; }
+.archive-reference .reference-memory-grid img { aspect-ratio: 4 / 3; }
+.archive-reference .reference-panel > :nth-last-child(2) { margin-bottom: 1.5rem; }
+.archive-reference .reference-panel-link { margin-top: auto; align-self: flex-start; }
+.archive-reference .reference-beyond {
+    margin-top: 1.5rem;
+    min-height: 208px;
+    padding: 2rem;
+    gap: 2rem;
+    border-color: rgba(205,231,255,.16);
+    background-image: linear-gradient(100deg,rgba(17,26,58,.8),rgba(15,23,53,.6));
+    box-shadow: 0 8px 24px rgba(0,0,0,.16);
+}
+.archive-reference .reference-beyond::before { display: none; }
+.archive-reference .reference-beyond-copy { max-width: 260px; }
+.archive-reference .reference-beyond-copy span { font-size: 1.375rem; font-weight: 600; }
+.archive-reference .reference-beyond-copy small { display: block; margin-top: .375rem; font-size: .6875rem; }
+.archive-reference .reference-beyond-copy p { margin: .75rem 0 0; font-size: .875rem; line-height: 1.7; }
+.archive-reference .reference-beyond-links { margin-left: 0; gap: 1.25rem; }
+.archive-reference .reference-beyond-links a { min-width: 56px; font-size: .75rem; white-space: nowrap; }
+.archive-reference .reference-beyond-links i { width: 40px; height: 40px; }
+.archive-reference .reference-beyond > img { width: 196px; right: 17%; bottom: -1rem; }
+.archive-reference .reference-signoff { padding: 2.5rem 1rem 1.5rem; }
+.archive-reference .reference-signoff em { margin-top: .5rem; font-size: .8125rem; line-height: 1.6; }
+
+@media (min-width: 992px) {
+    .archive-reference .main-wrapper { padding-top: 2rem; }
+}
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    body.archive-reference .reference-hero { min-height: 800px; }
+    .archive-reference .reference-profile-card { bottom: 13rem; }
+    .archive-reference .reference-profile-left .reference-profile-card { left: 1rem; }
+    .archive-reference .reference-profile-right .reference-profile-card { right: 1rem; }
+    .archive-reference .reference-welcome { bottom: 1.5rem; width: min(420px, 70%); }
+    .archive-reference .reference-archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .archive-reference .reference-memories { grid-column: 1 / -1; }
+    .archive-reference .reference-memory-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .archive-reference .reference-beyond { align-items: flex-start; flex-direction: column; gap: 1.25rem; min-height: 280px; }
+    .archive-reference .reference-beyond > img { right: 5%; }
+}
+@media (max-width: 767.98px) {
+    .archive-reference .home-side-character { display: none; }
+    body.archive-reference .reference-hero {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: .75rem;
+        min-height: 0;
+        padding: 1.5rem .75rem .75rem;
+    }
+    .archive-reference .reference-title {
+        grid-column: 1 / -1;
+        width: 100%;
+        padding: 0 .25rem;
+        margin-bottom: 1rem;
+    }
+    .archive-reference .reference-title h1 { font-size: clamp(1.875rem, 8vw, 2.5rem); }
+    .archive-reference .reference-title p { margin-top: 1rem; font-size: .8125rem; letter-spacing: .06em; }
+    .archive-reference .reference-profile {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        width: 100%;
+        min-width: 0;
+        height: 420px;
+        overflow: visible;
+    }
+    .archive-reference .reference-profile-art { height: 330px; width: 170%; bottom: 100px; }
+    .archive-reference .reference-profile-left .reference-profile-art { left: -35%; }
+    .archive-reference .reference-profile-right .reference-profile-art { right: -35%; }
+    .archive-reference .reference-profile-card {
+        bottom: 0;
+        width: 100%;
+        padding: 1rem .75rem;
+    }
+    .archive-reference .reference-profile-left .reference-profile-card { left: 0; }
+    .archive-reference .reference-profile-right .reference-profile-card { right: 0; }
+    .archive-reference .reference-profile-card h2 { font-size: 1.125rem; margin-bottom: .75rem; }
+    .archive-reference .reference-profile-card dl div { flex-direction: column; align-items: flex-start; gap: .25rem; }
+    .archive-reference .reference-profile-card dd { text-align: left; font-size: .8125rem; }
+    .archive-reference .reference-profile-card a { width: 100%; margin-top: .5rem; padding: .625rem .375rem; font-size: .75rem; gap: .375rem; }
+    .archive-reference .reference-aether { top: 43%; width: 70px; height: 100px; pointer-events: none; }
+    .archive-reference .reference-aether img { width: 165px; }
+    .archive-reference .reference-welcome {
+        position: relative;
+        grid-column: 1 / -1;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        min-height: 0;
+        margin-top: 1.25rem;
+        padding: 1rem 1rem 1rem 4.5rem;
+        transform: none;
+    }
+    .archive-reference .reference-welcome > img.reference-welcome-postman { width: 40px; left: 1rem; bottom: 1rem; }
+    .archive-reference .reference-welcome em { font-size: 1.25rem; }
+    .archive-reference .reference-welcome strong { font-size: .875rem; }
+    .archive-reference .reference-welcome a { min-height: 32px; }
+    body.archive-reference .reference-archive-grid { grid-template-columns: minmax(0, 1fr); margin-top: 1.5rem; gap: 1.25rem; }
+    .archive-reference .reference-memories { grid-column: auto; }
+    .archive-reference .reference-panel { padding: 1.25rem; }
+    .archive-reference .reference-panel header { margin-bottom: 1.25rem; }
+    .archive-reference .reference-beyond { min-height: 320px; padding: 1.5rem; gap: 1.25rem; flex-direction: column; align-items: flex-start; }
+    .archive-reference .reference-beyond-links { margin: 0; gap: 1rem; }
+    .archive-reference .reference-beyond > img { right: .25rem; bottom: -.5rem; width: 148px; }
+    .archive-reference .reference-beyond-cta { right: auto; left: 1.5rem; bottom: 1.5rem; }
+    .archive-reference .reference-signoff { font-size: .875rem; line-height: 1.7; }
 }
 
 .chronicle-hero {

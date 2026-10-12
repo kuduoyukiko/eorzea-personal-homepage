@@ -7,8 +7,11 @@
 
     <script>
         (function () {
-            var saved = localStorage.getItem('yukiko-visual-theme');
-            var theme = saved === 'ffxiv' ? 'ffxiv' : 'nier';
+            var theme = 'nier';
+            try {
+                var saved = localStorage.getItem('yukiko-visual-theme');
+                if (saved === 'ffxiv' || saved === 'nier' || saved === 'blue-pop') theme = saved;
+            } catch (error) { /* Storage may be disabled; keep the original default. */ }
             document.documentElement.dataset.theme = theme;
             window.__yukikoTheme = theme;
         }());
@@ -26,6 +29,8 @@
     <script>
         if (window.__yukikoTheme === 'nier') {
             document.write('<link id="nierThemeStylesheet" rel="stylesheet" href="{{ versioned_static('css/nier-terminal.css') }}">');
+        } else if (window.__yukikoTheme === 'blue-pop') {
+            document.write('<link id="bluePopThemeStylesheet" rel="stylesheet" href="{{ versioned_static('css/blue-pop.css') }}">');
         }
     </script>
     {% block head_extra %}{% endblock %}
@@ -40,6 +45,10 @@
     </style>
 </head>
 <body class="nier-terminal {% block body_class %}{% endblock %} site-mode-{{ site_mode }}">
+    <script>
+        document.body.dataset.theme = document.documentElement.dataset.theme || 'nier';
+        document.body.classList.toggle('nier-terminal', document.body.dataset.theme === 'nier');
+    </script>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
 
     {% block before_navigation %}{% endblock %}
@@ -105,13 +114,14 @@
                 </ul>
                 <ul class="navbar-nav sidebar-admin">
                     <li class="nav-item theme-switch-item">
-                        <button class="theme-switch" id="themeSwitch" type="button" aria-label="切换网页风格">
-                            <span class="theme-switch-track" aria-hidden="true"><i></i></span>
-                            <span class="theme-switch-copy">
-                                <small>VISUAL MODE</small>
-                                <strong id="themeSwitchLabel">YoRHa 档案</strong>
-                            </span>
-                        </button>
+                        <div class="theme-switch" id="themeSwitch" role="group" aria-label="主题风格"
+                            data-nier-href="{{ versioned_static('css/nier-terminal.css') }}"
+                            data-blue-pop-href="{{ versioned_static('css/blue-pop.css') }}">
+                            <span class="theme-switch-heading">VISUAL MODE <small>主题风格</small></span>
+                            <button class="theme-choice" type="button" data-theme-choice="ffxiv" aria-pressed="false"><span aria-hidden="true">✧</span> FFXIV 水晶</button>
+                            <button class="theme-choice" type="button" data-theme-choice="nier" aria-pressed="false"><span aria-hidden="true">◈</span> YoRHa 档案</button>
+                            <button class="theme-choice" type="button" data-theme-choice="blue-pop" aria-pressed="false"><span aria-hidden="true">◆</span> 蓝白潮流</button>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/login">

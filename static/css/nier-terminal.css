@@ -323,12 +323,12 @@ body.nier-terminal::after {
     background: var(--nt-paper-deep);
 }
 .nier-terminal .reference-hero-bg {
-    filter: saturate(.9) contrast(.96) brightness(.9);
+    filter: saturate(.78) contrast(.96) brightness(.84);
 }
 .nier-terminal .reference-hero-scrim {
     background:
         linear-gradient(90deg, rgba(222,216,202,.62), transparent 34% 66%, rgba(222,216,202,.62)),
-        linear-gradient(180deg, rgba(31,30,26,.14), transparent 52%, rgba(31,30,26,.3));
+        linear-gradient(180deg, rgba(31,30,26,.6), rgba(31,30,26,.12) 52%, rgba(31,30,26,.32));
     box-shadow: inset 0 0 0 10px rgba(225,220,208,.12), inset 0 0 0 11px rgba(42,40,34,.4);
     backdrop-filter: none;
 }
@@ -342,7 +342,7 @@ body.nier-terminal::after {
     letter-spacing: .14em;
     transform: none;
 }
-.nier-terminal .reference-title p { color: rgba(239,232,216,.78); }
+.nier-terminal .reference-title p { color: #f1ead9; text-shadow: 0 1px 6px rgba(0,0,0,.65); }
 .nier-terminal .reference-title-crystal { filter: grayscale(1) sepia(.5) brightness(1.65); }
 .nier-terminal .reference-profile-art { filter: drop-shadow(0 16px 22px rgba(0,0,0,.38)); }
 .nier-terminal .reference-profile-card { color: var(--nt-ink) !important; }
@@ -355,6 +355,21 @@ body.nier-terminal::after {
 .nier-terminal .reference-profile-card dt,
 .nier-terminal .reference-profile-card dd { color: var(--nt-ink); text-shadow: none; }
 .nier-terminal .reference-profile-card dl { border-color: var(--nt-line-soft); }
+.nier-terminal.archive-reference .reference-profile-card { background: rgba(235,230,219,.94) !important; }
+.nier-terminal.archive-reference .navbar-ff14::after { display: none; }
+.nier-terminal.archive-reference .reference-signoff em { color: var(--nt-muted); }
+.nier-terminal .reference-profile-card dt { color: var(--nt-muted); }
+.nier-terminal .reference-profile-card a {
+    color: var(--nt-paper-light);
+    background: var(--nt-ink);
+    border-color: var(--nt-ink);
+}
+.nier-terminal .reference-profile-card a:hover { color: var(--nt-paper-light); background: #414036; }
+.nier-terminal.archive-reference .reference-message-meta time { color: var(--nt-muted); }
+.nier-terminal.archive-reference .reference-panel {
+    border-color: var(--nt-line-soft) !important;
+    box-shadow: 0 3px 10px rgba(50,47,39,.06) !important;
+}
 .nier-terminal .reference-welcome {
     border: 1px solid var(--nt-ink);
     border-radius: 0;
